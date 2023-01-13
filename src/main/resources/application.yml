@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: "nft"
+
+server:
+  port: 9966
+web3j:
+  admin-client: false
+#  client-address: "https://opbningxia.bsngate.com:18602/api/cbec55bcc1aa422c9cd0e99ea100290e/rpc"
+  client-address: "http://127.0.0.1:7545"
+
+
+ipfs:
+  node_url: https://ipfs.io/ipfs/
+  pinata:
+   pinata_api_key: 9e40984731568f062f21
+   pinata_secret_api_key: c7e3a4f1a1cbeb977ff77739fd967a9ed277bd3e6ce1cf7224bdda3a072b3827
+
+
+
+
