@@ -1,6 +1,9 @@
 package com.example.web3study.controller;
 
 
+import cn.hutool.core.thread.ThreadUtil;
+import com.example.web3study.extend.MyPollingTransactionReceiptProcessor;
+import com.example.web3study.smartContract.NFT721;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterNumber;
+import org.web3j.protocol.core.methods.response.EthBlockNumber;
 import org.web3j.protocol.core.methods.response.EthGetBalance;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.tx.RawTransactionManager;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.ContractGasProvider;
 import org.web3j.tx.gas.DefaultGasProvider;
+import org.web3j.tx.gas.StaticGasProvider;
 
 import java.math.BigInteger;
+import java.util.concurrent.ExecutionException;
+import java.util.function.BiConsumer;
 
 @RestController
 @RequestMapping("/smart")
@@ -29,24 +36,27 @@ public class smartController {
 
 
     @GetMapping("/set")
-    public String doGetLatestBlockNumber()throws Exception{
-        Credentials credentials = Credentials.create("0009e42aeecd0a3a71c800206b65ff855f607f356812587b4633b59a3dd67d77");
-        BigInteger blockNumber = web3j.ethBlockNumber().sendAsync().get().getBlockNumber();
-        logger.info("The BlockNumber is: {}",blockNumber);
-        //生成请求参数
-        DefaultBlockParameterNumber defaultBlockParameterNumber = new DefaultBlockParameterNumber(blockNumber);
-        //根据请求参数获取余额
-        EthGetBalance ethGetBalance  = web3j.ethGetBalance(credentials.getAddress(),defaultBlockParameterNumber)
-                .sendAsync().get();
-        logger.info("Get Account Ether is: {}",ethGetBalance.getBalance());
-        ContractGasProvider contractGasProvider = new DefaultGasProvider();
-        logger.info("ERC20 Contract Address: {}",contractGasProvider.getGasLimit());
-        logger.info("ERC20 Contract Address: {}",contractGasProvider.getGasPrice());
+    public String doGetLatestBlockNumber() throws InterruptedException {
 
+
+        Credentials credentials = Credentials.create("dc156b09431f68dec35e60d6a1882afdd787f22f416503264a580271e2c6acba");
         long chainIdOfPolygon = 1337;
         TransactionManager bridgeTokenTxManager = new RawTransactionManager(
-                web3j, credentials, chainIdOfPolygon);
+                web3j, credentials, chainIdOfPolygon, new MyPollingTransactionReceiptProcessor(web3j));
+        StaticGasProvider staticGasProvider = new StaticGasProvider(BigInteger.valueOf(6700000), BigInteger.valueOf(6721975));
+        NFT721.deploy(web3j, bridgeTokenTxManager, staticGasProvider,
+                "996", "lb", BigInteger.valueOf(5),
+                "https://avatars.githubusercontent.com/u/54950332?s=96&v=4").sendAsync().whenCompleteAsync(new BiConsumer<NFT721, Throwable>() {
+            @Override
+            public void accept(NFT721 nft721, Throwable throwable) {
+                System.out.println(nft721.getContractAddress());
+                
+            }
+        });
 
-      return "";
+        return "fff";
+
     }
+
+
 }

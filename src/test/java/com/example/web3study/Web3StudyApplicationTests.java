@@ -54,19 +54,16 @@ class Web3StudyApplicationTests {
 //        BigInteger gasUsed1 = nft721.getTransactionReceipt().get().getGasUsed();
 //        System.out.println(gasUsed1);
 //        System.out.println(nft721.getContractAddress());
+//
+//        NFT721 load = NFT721.load("0x5a7d08bb5d781d84e73cf5853736f2cda35263f5", web3j, bridgeTokenTxManager, staticGasProvider);
+//        load.owner().sendAsync().whenCompleteAsync(new BiConsumer<String, Throwable>() {
+//            @Override
+//            public void accept(String s, Throwable throwable) {
+//                System.out.println(s);
+//            }
+//        });
+//        System.out.println(55555);
 
-        NFT721 load = NFT721.load("0x5a7d08bb5d781d84e73cf5853736f2cda35263f5", web3j, bridgeTokenTxManager, staticGasProvider);
-        CompletableFuture<String> stringCompletableFuture = load.owner().sendAsync();
-        while (true){
-            boolean done = stringCompletableFuture.isDone();
-            if (done){
-                System.out.println(stringCompletableFuture.get());
-                break;
-            }else {
-                System.out.println("为延长");
-                Thread.sleep(1000);
-            }
-        }
 //        System.out.println(s);
 //        String s1 = load.tokenURI(BigInteger.valueOf(1)).sendAsync().get();
 //        System.out.println(s1);
