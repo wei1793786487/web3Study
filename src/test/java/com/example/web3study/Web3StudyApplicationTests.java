@@ -1,8 +1,11 @@
 package com.example.web3study;
-
+import cn.hutool.json.JSON;
 import com.example.web3study.controller.BlockChainInfoController;
 import com.example.web3study.extend.MyPollingTransactionReceiptProcessor;
+import com.example.web3study.pojo.Web3TransactionError;
 import com.example.web3study.smartContract.NFT721;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import io.reactivex.functions.Consumer;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -14,14 +17,19 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.DefaultBlockParameterNumber;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
+import org.web3j.protocol.exceptions.TransactionException;
 import org.web3j.tx.RawTransactionManager;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.StaticGasProvider;
 
 import java.math.BigInteger;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.BiConsumer;
+
+import static com.example.web3study.utils.Web3Utils.web3jErrorToPojo;
 
 
 @SpringBootTest
@@ -36,9 +44,16 @@ class Web3StudyApplicationTests {
     }
 
 
-    public void  bshu() throws ExecutionException, InterruptedException {
+    public void  bshu()  {
         Credentials credentials = Credentials.create("dc156b09431f68dec35e60d6a1882afdd787f22f416503264a580271e2c6acba");
-        BigInteger blockNumber = web3j.ethBlockNumber().sendAsync().get().getBlockNumber();
+        BigInteger blockNumber = null;
+        try {
+            blockNumber = web3j.ethBlockNumber().sendAsync().get().getBlockNumber();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
         logger.info("The BlockNumber is: {}",blockNumber);
         DefaultBlockParameterNumber defaultBlockParameterNumber = new DefaultBlockParameterNumber(blockNumber);
 //        EthGetBalance ethGetBalance  = web3j.ethGetBalance(credentials.getAddress(),defaultBlockParameterNumber)
@@ -48,9 +63,25 @@ class Web3StudyApplicationTests {
         TransactionManager bridgeTokenTxManager = new RawTransactionManager(
                 web3j, credentials, chainIdOfPolygon,new MyPollingTransactionReceiptProcessor(web3j));
         StaticGasProvider staticGasProvider = new StaticGasProvider(BigInteger.valueOf(6700000), BigInteger.valueOf(6721975));
-//        NFT721 nft721 = NFT721.deploy(web3j, bridgeTokenTxManager, staticGasProvider,
-//                "", "lb", BigInteger.valueOf(5),
-//                "https://avatars.githubusercontent.com/u/54950332?s=96&v=4").sendAsync().get();
+
+        CompletableFuture<NFT721> lb = NFT721.deploy(web3j, bridgeTokenTxManager, staticGasProvider,
+                "", "lb", BigInteger.valueOf(5),
+                "https://avatars.githubusercontent.com/u/54950332?s=96&v=4").sendAsync();
+        lb.whenComplete(new BiConsumer<NFT721, Throwable>() {
+            @Override
+            public void accept(NFT721 nft721, Throwable throwable) {
+                if (throwable!=null){
+                    String message = throwable.getMessage();
+                    Web3TransactionError web3TransactionError = web3jErrorToPojo(message);
+                    System.out.println(web3TransactionError);
+                }else {
+
+
+                }
+
+            }
+        });
+
 //        BigInteger gasUsed1 = nft721.getTransactionReceipt().get().getGasUsed();
 //        System.out.println(gasUsed1);
 //        System.out.println(nft721.getContractAddress());

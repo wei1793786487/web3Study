@@ -1,11 +1,9 @@
 package com.example.web3study.utils;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.http.HttpRequest;
 import com.example.web3study.pojo.Web3Account;
+import com.example.web3study.pojo.Web3TransactionError;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.web3j.crypto.*;
 import org.web3j.utils.Numeric;
@@ -49,5 +47,12 @@ public class Web3Utils {
         return new Web3Account(address,publicKey,PrivateKey,memorizingWords);
     }
 
+    public static Web3TransactionError web3jErrorToPojo(String errorMessage){
+        Gson gson = new Gson();
+        Map map = gson.fromJson(errorMessage, Map.class);
+        String hash = (String) map.keySet().toArray()[0];
+        Map map1 = (Map) map.get(hash);
+        return new Web3TransactionError(hash, (String) map1.get("error"), (Double) map1.get("program_counter"), (String) map1.get("return"), (String) map1.get("reason"));
+    }
 
 }
