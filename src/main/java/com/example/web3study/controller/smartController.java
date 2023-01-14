@@ -2,8 +2,10 @@ package com.example.web3study.controller;
 
 
 import cn.hutool.core.thread.ThreadUtil;
+import com.example.web3study.exception.XxException;
 import com.example.web3study.extend.MyPollingTransactionReceiptProcessor;
 import com.example.web3study.pojo.ResultData;
+import com.example.web3study.pojo.ReturnCode;
 import com.example.web3study.smartContract.NFT721;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +64,8 @@ public class smartController {
     }
     @GetMapping("/return")
     public String haha(){
-        throw new RuntimeException("55555");
+        //自定义异常处理
+        throw new XxException(ReturnCode.INVALID_TOKEN);
     }
 
 }

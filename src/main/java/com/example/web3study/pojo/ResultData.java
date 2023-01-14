@@ -1,5 +1,6 @@
 package com.example.web3study.pojo;
 
+import com.example.web3study.exception.XxException;
 import lombok.Data;
 
 @Data
@@ -13,7 +14,11 @@ public class ResultData<t> {
   public ResultData (){
     this.timestamp = System.currentTimeMillis();
   }
-
+  public ResultData(XxException e) {
+    this.status = e.getExceptionEnums().getCode();
+    this.message =  e.getExceptionEnums().getMessage();
+    this.timestamp = System.currentTimeMillis();
+  }
   public static <t> ResultData<t> success(t data) {
     ResultData<t> resultData = new ResultData<>();
     resultData.setStatus(ReturnCode.RC100.getCode());
@@ -28,6 +33,9 @@ public class ResultData<t> {
     resultData.setMessage(message);
     return resultData;
   }
+
+
+
 
 }
 

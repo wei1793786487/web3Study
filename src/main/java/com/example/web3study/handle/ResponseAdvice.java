@@ -1,19 +1,18 @@
 package com.example.web3study.handle;
 
+import com.example.web3study.exception.XxException;
 import com.example.web3study.pojo.ResultData;
-import com.example.web3study.pojo.ReturnCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -42,10 +41,13 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResultData<String> exception(Exception e) {
-        log.error("全局异常信息 ex={}", e.getMessage(), e);
-        return ResultData.fail(ReturnCode.RC500.getCode(),e.getMessage());
+    public ResponseEntity<ResultData> exception(Exception e) {
+        if (e instanceof XxException) {
+             //普通异常
+            return ResponseEntity.status(200).body(new ResultData((XxException) e));
+        }
+        return  null;
+
     }
 
 }
