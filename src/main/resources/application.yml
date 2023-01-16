@@ -4,10 +4,14 @@ spring:
 
 server:
   port: 9966
+
 web3j:
+  private_key: dc156b09431f68dec35e60d6a1882afdd787f22f416503264a580271e2c6acba
+  gas_limit: 6721975
   admin-client: false
 #  client-address: "https://opbningxia.bsngate.com:18602/api/cbec55bcc1aa422c9cd0e99ea100290e/rpc"
-  client-address: "http://127.0.0.1:7545"
+#  client-address: "http://127.0.0.1:7545"
+  client-address: "http://192.168.1.250:8545"
 
 
 ipfs:

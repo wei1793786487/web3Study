@@ -1,0 +1,36 @@
+version: '3.3'
+
+services:
+  #########################################################################
+  # ethereum/client-go
+  # - https://github.com/ethereum/go-ethereum/wiki/Running-in-Docker
+  #------------------------------------------------------------------------
+  # Example of commands to container
+  # - Use console inside container
+  #  1. $ docker compose -f docker-compose.eth.yml exec eth-node sh
+  #  2. # geth attach or geth attach ipc://root/.ethereum/goerli/geth.ipc
+  #  3. > eth.syncing
+  # - Call JSON-RPC (https://eth.wiki/json-rpc/API)
+  #   $ curl -X POST -H "Content-Type: application/json" --data '{"jsonrpc":"2.0","method":"eth_syncing","params":[],"id":1}' http://localhost:8545
+  # - [WIP] Use console outside container
+  #   $ geth attach ./docker/nodes/eth/data/geth.ipc => not working yet
+  #   $ geth attach ipc:./docker/nodes/eth/data/geth.ipc => not working yet
+  #   $ docker exec -it go-crypto-wallet-eth-node-1 geth attach ipc://root/.ethereum/goerli/geth.ipc => it works
+  #########################################################################
+  eth-node:
+    # https://hub.docker.com/r/ethereum/client-go/
+    image: ethereum/client-go:v1.10.21
+    volumes:
+      #- ./docker/nodes/eth/data:/root/.ethereum/goerli
+#      - ./docker/nodes/eth/data:/root/.ethereum/sepolia
+      - ./docker/nodes/eth/data:/root/.ethereum/
+      - ./config:/config
+
+    ports:
+      - "${ETH_SYNC_PORT:-30303}:30303"
+      - "${ETH_RPC_PORT:-8545}:8545"
+    stdin_open: true
+    tty: true
+    #command: --goerli --http --http.addr 0.0.0.0 --http.api admin,debug,web3,eth,txpool,net,personal
+#    command: --sepolia --http --http.addr 0.0.0.0 --http.api admin,debug,web3,eth,txpool,net,personal  console init /config/genesis.json
+    command: --http --http.addr 0.0.0.0 --http.api admin,debug,web3,eth,txpool,net,personal    console
