@@ -44,8 +44,8 @@ class Web3StudyApplicationTests {
     }
 
 
-    public void  bshu()  {
-        Credentials credentials = Credentials.create("dc156b09431f68dec35e60d6a1882afdd787f22f416503264a580271e2c6acba");
+    public void  bshu() throws ExecutionException, InterruptedException {
+        Credentials credentials = Credentials.create("3cf44c4d4252d9d9277f5503dac4e365f56c69cff5d1396da4f156dc115ddcac");
         BigInteger blockNumber = null;
         try {
             blockNumber = web3j.ethBlockNumber().sendAsync().get().getBlockNumber();
@@ -62,37 +62,21 @@ class Web3StudyApplicationTests {
         long chainIdOfPolygon = 1337;
         TransactionManager bridgeTokenTxManager = new RawTransactionManager(
                 web3j, credentials, chainIdOfPolygon,new MyPollingTransactionReceiptProcessor(web3j));
-        StaticGasProvider staticGasProvider = new StaticGasProvider(BigInteger.valueOf(6700000), BigInteger.valueOf(6721975));
+        StaticGasProvider staticGasProvider = new StaticGasProvider(BigInteger.valueOf(284232177), BigInteger.valueOf(3000000));
 
-        CompletableFuture<NFT721> lb = NFT721.deploy(web3j, bridgeTokenTxManager, staticGasProvider,
-                "", "lb", BigInteger.valueOf(5),
-                "https://avatars.githubusercontent.com/u/54950332?s=96&v=4").sendAsync();
-        lb.whenComplete(new BiConsumer<NFT721, Throwable>() {
-            @Override
-            public void accept(NFT721 nft721, Throwable throwable) {
-                if (throwable!=null){
-                    String message = throwable.getMessage();
-                    Web3TransactionError web3TransactionError = web3jErrorToPojo(message);
-                    System.out.println(web3TransactionError);
-                }else {
+//        NFT721 lb = NFT721.deploy(web3j, bridgeTokenTxManager, staticGasProvider,
+//                "12134", "lb", BigInteger.valueOf(5),
+//                "https://avatars.githubusercontent.com/u/54950332?s=96&v=4").sendAsync().get();
+//        System.out.println(lb.getContractAddress());
 
-
-                }
-
-            }
-        });
 
 //        BigInteger gasUsed1 = nft721.getTransactionReceipt().get().getGasUsed();
 //        System.out.println(gasUsed1);
 //        System.out.println(nft721.getContractAddress());
 //
-//        NFT721 load = NFT721.load("0x5a7d08bb5d781d84e73cf5853736f2cda35263f5", web3j, bridgeTokenTxManager, staticGasProvider);
-//        load.owner().sendAsync().whenCompleteAsync(new BiConsumer<String, Throwable>() {
-//            @Override
-//            public void accept(String s, Throwable throwable) {
-//                System.out.println(s);
-//            }
-//        });
+        NFT721 load = NFT721.load("0x82834eb16f98161fae59b5a84baf5b1c5746b960", web3j, bridgeTokenTxManager, staticGasProvider);
+        load.safeMint().sendAsync().get();
+
 //        System.out.println(55555);
 
 //        System.out.println(s);

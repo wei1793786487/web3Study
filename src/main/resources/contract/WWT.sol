@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "../dep/@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "../dep/@openzeppelin/contracts/access/Ownable.sol";
 
 contract WWT is ERC20,Ownable {
     //默认是false 判断是如果是true是不允许的
