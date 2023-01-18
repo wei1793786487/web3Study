@@ -30,8 +30,6 @@ public class SmartController {
     @Autowired
     private Web3j web3j;
 
-    @Autowired
-    private  Credentials credentials;
 
     @Autowired
     private StaticGasProvider staticGasProvider;

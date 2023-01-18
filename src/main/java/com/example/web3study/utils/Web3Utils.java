@@ -3,6 +3,7 @@ package com.example.web3study.utils;
 import com.example.web3study.pojo.Web3Account;
 import com.example.web3study.pojo.Web3TransactionError;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.web3j.crypto.*;
@@ -48,11 +49,16 @@ public class Web3Utils {
     }
 
     public static Web3TransactionError web3jErrorToPojo(String errorMessage){
-        Gson gson = new Gson();
-        Map map = gson.fromJson(errorMessage, Map.class);
-        String hash = (String) map.keySet().toArray()[0];
-        Map map1 = (Map) map.get(hash);
-        return new Web3TransactionError(hash, (String) map1.get("error"), (Double) map1.get("program_counter"), (String) map1.get("return"), (String) map1.get("reason"));
+        try {
+            Gson gson = new Gson();
+            Map map = gson.fromJson(errorMessage, Map.class);
+            String hash = (String) map.keySet().toArray()[0];
+            Map map1 = (Map) map.get(hash);
+            return new Web3TransactionError(hash, (String) map1.get("error"), (Double) map1.get("program_counter"), (String) map1.get("return"), (String) map1.get("reason"));
+        } catch (JsonSyntaxException e) {
+            //有的链不返回错误码 返回的不是json数据 所以做一个报错处理
+            return  new Web3TransactionError(errorMessage);
+        }
     }
 
 }

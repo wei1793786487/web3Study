@@ -16,7 +16,6 @@ interface WWT{
 
 
 contract MyToken is ERC721, Ownable,ERC721Burnable {
-
     using Counters for Counters.Counter;
 
     string  private baseUrl;
@@ -31,6 +30,9 @@ contract MyToken is ERC721, Ownable,ERC721Burnable {
     //默认是false 判断是如果是true是不允许的
     mapping(uint256 => bool) private _notApprovalToAdmin;
 
+    //nft的状态  0为未售卖  1为售卖中
+    mapping(uint256 => uint256) public NftStatus;
+
     constructor(string memory name,string memory symbol,uint256  mint_number,string memory url) ERC721(name,symbol){
         require(bytes(name).length > 0,"The name of nft cannot be empt");
         baseUrl=url;
@@ -41,6 +43,7 @@ contract MyToken is ERC721, Ownable,ERC721Burnable {
                 uint256 tokenId = _tokenIdCounter.current();
                 _tokenIdCounter.increment();
                 _safeMint(msg.sender,tokenId);
+                NftStatus[tokenId]=0;
             }
         }
 
@@ -57,6 +60,7 @@ contract MyToken is ERC721, Ownable,ERC721Burnable {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
+        NftStatus[tokenId]=0;
     }
 
     //这里其实可以单独提取出来作为一个市场功能
@@ -80,6 +84,22 @@ contract MyToken is ERC721, Ownable,ERC721Burnable {
         return  block.timestamp;
     }
 
+    function setNftStatus( uint256 tokenId,uint256 status) public  {
+        address adminAddress=owner();
+        address owner = ERC721.ownerOf(tokenId);
+
+        require(
+            _msgSender() == owner||adminAddress == _msgSender(),
+            "ERC721: You are not the owner of the contract"
+        );
+        require(
+            status == 0||status==1,
+            "\u72b6\u6001\u53ea\u80fd\u662f\u0030\u6216\u8005\u0031"
+        );
+        NftStatus[tokenId]=status;
+
+    }
+
     function transferByAdmin(
         address to,
         uint256 tokenId
@@ -101,6 +121,7 @@ contract MyToken is ERC721, Ownable,ERC721Burnable {
         );
         address owner = ERC721.ownerOf(tokenId);
         _safeTransfer(owner, to, tokenId, data);
+        NftStatus[tokenId]=0;
     }
 
 
@@ -114,7 +135,6 @@ contract MyToken is ERC721, Ownable,ERC721Burnable {
     }
 
     function updateCurrencyAddress(address _currency_address) onlyOwner   public {
-
         address _currency= WWT(_currency_address).owner();
         require(
             _currency==owner(),

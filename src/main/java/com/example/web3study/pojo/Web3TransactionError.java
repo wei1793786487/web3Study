@@ -15,6 +15,9 @@ public class Web3TransactionError {
         this.returnData = returnData;
         this.reason = reason;
     }
+    public Web3TransactionError(String error) {
+        this.error = error;
+    }
 
     private  String  transactionHash;
     private  String error;
