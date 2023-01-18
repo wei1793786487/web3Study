@@ -58,8 +58,5 @@ public class SmartController {
         });
         return "操作成功";
     }
-    @PostMapping("/ERC721Nft")
-    public String nft721(){
-         return "";
-    }
+
 }

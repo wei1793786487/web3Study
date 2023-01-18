@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.EthChainId;
@@ -28,6 +29,9 @@ public class CreateBeanHandle {
 
     @Value("${web3j.gas_limit}")
     private  BigInteger  gasLimit;
+
+    @Value("${web3j.gas_price}")
+    private  String  gasPrice;
     @Autowired
     private Web3j web3j;
 
@@ -44,10 +48,15 @@ public class CreateBeanHandle {
 
     @Bean
     public StaticGasProvider staticGasProvider() throws IOException {
-        EthGasPrice ethGasPrice = web3j.ethGasPrice().send();
-        BigInteger gasPrice = ethGasPrice.getGasPrice();
+        BigInteger gasSpendPrice;
+        if (!StringUtils.hasText(gasPrice)){
+            EthGasPrice ethGasPrice = web3j.ethGasPrice().send();
+            gasSpendPrice= ethGasPrice.getGasPrice();
+        }else {
+            gasSpendPrice =new BigInteger(gasPrice);
+        }
         log.info("Gas Price: {}",gasPrice);
-        return new StaticGasProvider(gasPrice,gasLimit);
+        return new StaticGasProvider(gasSpendPrice,gasLimit);
     }
 
     @Bean

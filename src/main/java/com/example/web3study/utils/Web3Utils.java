@@ -20,6 +20,7 @@ import static org.web3j.crypto.Hash.sha256;
 
 @Slf4j
 @Component
+
 public class Web3Utils {
 
 

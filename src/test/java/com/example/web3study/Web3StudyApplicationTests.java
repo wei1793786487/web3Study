@@ -64,18 +64,18 @@ class Web3StudyApplicationTests {
                 web3j, credentials, chainIdOfPolygon,new MyPollingTransactionReceiptProcessor(web3j));
         StaticGasProvider staticGasProvider = new StaticGasProvider(BigInteger.valueOf(284232177), BigInteger.valueOf(3000000));
 
-//        NFT721 lb = NFT721.deploy(web3j, bridgeTokenTxManager, staticGasProvider,
-//                "12134", "lb", BigInteger.valueOf(5),
-//                "https://avatars.githubusercontent.com/u/54950332?s=96&v=4").sendAsync().get();
-//        System.out.println(lb.getContractAddress());
+        NFT721 lb = NFT721.deploy(web3j, bridgeTokenTxManager, staticGasProvider,
+                "12134", "lb", BigInteger.valueOf(5),
+                "https://avatars.githubusercontent.com/u/54950332?s=96&v=4").sendAsync().get();
+        System.out.println(lb.getContractAddress());
 
-
+//
 //        BigInteger gasUsed1 = nft721.getTransactionReceipt().get().getGasUsed();
 //        System.out.println(gasUsed1);
 //        System.out.println(nft721.getContractAddress());
-//
-        NFT721 load = NFT721.load("0x82834eb16f98161fae59b5a84baf5b1c5746b960", web3j, bridgeTokenTxManager, staticGasProvider);
-        load.safeMint().sendAsync().get();
+////
+//        NFT721 load = NFT721.load("0x82834eb16f98161fae59b5a84baf5b1c5746b960", web3j, bridgeTokenTxManager, staticGasProvider);
+//        load.safeMint().sendAsync().get();
 
 //        System.out.println(55555);
 
