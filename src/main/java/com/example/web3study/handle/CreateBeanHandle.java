@@ -56,11 +56,13 @@ public class CreateBeanHandle {
             gasSpendPrice =new BigInteger(gasPrice);
         }
         log.info("Gas Price: {}",gasPrice);
+        //todo 这里要先判断一下余额
         return new StaticGasProvider(gasSpendPrice,gasLimit);
     }
 
     @Bean
     public TransactionManager defaultTransactionManager() throws IOException {
+
         EthChainId ethChainId = web3j.ethChainId().send();
         BigInteger chainId = ethChainId.getChainId();
         log.info("Ethereum Chain Id: {}",chainId);
