@@ -10,9 +10,10 @@ public enum ReturnCode {
     NFT_NAME_NULL(1001,"nft的名称不能为空"),
     IPFS_UPLOAD_ERROR(1002,"ipfs文件上传异常"),
 
+
     NFT_MINT_ERROR(1003,"nft铸造异常"),
 
-
+    PARAMETER_ERROR(1004,"参数异常"),
 
     INVALID_TOKEN(2001,"访问令牌不合法");
 

@@ -20,7 +20,7 @@ server:
 web3j:
   blockchain_name: Bsn武汉链
   private_key: 3cf44c4d4252d9d9277f5503dac4e365f56c69cff5d1396da4f156dc115ddcac
-  gas_price: 284232177
+  gas_price: 1
   gas_limit: 3000000
   admin-client: false
 #  client-address: "https://opbningxia.bsngate.com:18602/api/cbec55bcc1aa422c9cd0e99ea100290e/rpc"
