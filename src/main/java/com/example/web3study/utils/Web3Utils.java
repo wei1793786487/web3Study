@@ -125,8 +125,9 @@ public class Web3Utils {
                 blockchainLog.setErrorInfo(error);
                 blockchainLog.setState(0);
             }
-            int id = blockchainLogService.insert(blockchainLog);
-            return id;
+            //注意 这个时候返回的id是影响的条数 真正的id已经放在传入的实体类里面
+            int id = blockchainLogService.insertSelective(blockchainLog);
+            return blockchainLog.getId();
         } catch (Exception e) {
             log.error(e.toString());
             throw new RuntimeException(e);
