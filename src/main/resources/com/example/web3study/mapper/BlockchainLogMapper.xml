@@ -10,11 +10,15 @@
     <result column="gas_spend" jdbcType="INTEGER" property="gasSpend" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="blockchain" jdbcType="VARCHAR" property="blockchain" />
+    <result column="blockNumber" jdbcType="VARCHAR" property="blocknumber" />
+    <result column="block_hash" jdbcType="VARCHAR" property="blockHash" />
+    <result column="transaction_hash" jdbcType="VARCHAR" property="transactionHash" />
     <result column="error_info" jdbcType="VARCHAR" property="errorInfo" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, contract_address, mint_address, gas_spend, `state`, blockchain, error_info
+    id, contract_address, mint_address, gas_spend, `state`, blockchain, blockNumber, 
+    block_hash, transaction_hash, error_info
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -31,10 +35,12 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.web3study.pojo.BlockchainLog" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into blockchain_log (contract_address, mint_address, gas_spend, 
-      `state`, blockchain, error_info
+      `state`, blockchain, blockNumber, 
+      block_hash, transaction_hash, error_info
       )
     values (#{contractAddress,jdbcType=VARCHAR}, #{mintAddress,jdbcType=VARCHAR}, #{gasSpend,jdbcType=INTEGER}, 
-      #{state,jdbcType=INTEGER}, #{blockchain,jdbcType=VARCHAR}, #{errorInfo,jdbcType=VARCHAR}
+      #{state,jdbcType=INTEGER}, #{blockchain,jdbcType=VARCHAR}, #{blocknumber,jdbcType=VARCHAR}, 
+      #{blockHash,jdbcType=VARCHAR}, #{transactionHash,jdbcType=VARCHAR}, #{errorInfo,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.web3study.pojo.BlockchainLog" useGeneratedKeys="true">
@@ -56,6 +62,15 @@
       <if test="blockchain != null">
         blockchain,
       </if>
+      <if test="blocknumber != null">
+        blockNumber,
+      </if>
+      <if test="blockHash != null">
+        block_hash,
+      </if>
+      <if test="transactionHash != null">
+        transaction_hash,
+      </if>
       <if test="errorInfo != null">
         error_info,
       </if>
@@ -75,6 +90,15 @@
       </if>
       <if test="blockchain != null">
         #{blockchain,jdbcType=VARCHAR},
+      </if>
+      <if test="blocknumber != null">
+        #{blocknumber,jdbcType=VARCHAR},
+      </if>
+      <if test="blockHash != null">
+        #{blockHash,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionHash != null">
+        #{transactionHash,jdbcType=VARCHAR},
       </if>
       <if test="errorInfo != null">
         #{errorInfo,jdbcType=VARCHAR},
@@ -100,6 +124,15 @@
       <if test="blockchain != null">
         blockchain = #{blockchain,jdbcType=VARCHAR},
       </if>
+      <if test="blocknumber != null">
+        blockNumber = #{blocknumber,jdbcType=VARCHAR},
+      </if>
+      <if test="blockHash != null">
+        block_hash = #{blockHash,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionHash != null">
+        transaction_hash = #{transactionHash,jdbcType=VARCHAR},
+      </if>
       <if test="errorInfo != null">
         error_info = #{errorInfo,jdbcType=VARCHAR},
       </if>
@@ -114,6 +147,9 @@
       gas_spend = #{gasSpend,jdbcType=INTEGER},
       `state` = #{state,jdbcType=INTEGER},
       blockchain = #{blockchain,jdbcType=VARCHAR},
+      blockNumber = #{blocknumber,jdbcType=VARCHAR},
+      block_hash = #{blockHash,jdbcType=VARCHAR},
+      transaction_hash = #{transactionHash,jdbcType=VARCHAR},
       error_info = #{errorInfo,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

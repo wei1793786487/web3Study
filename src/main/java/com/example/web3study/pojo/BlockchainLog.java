@@ -32,7 +32,22 @@ public class BlockchainLog {
     private String blockchain;
 
     /**
-     * 错误原因
+     * 交易完成的区块
+     */
+    private String blocknumber;
+
+    /**
+     * 区块hash
+     */
+    private String blockHash;
+
+    /**
+     * 交易hash
+     */
+    private String transactionHash;
+
+    /**
+     * 错误信息
      */
     private String errorInfo;
 }

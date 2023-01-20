@@ -23,6 +23,8 @@ public interface NftMapper {
    List<Nft> selectAllByNameLikeOrSymbolLike(@Param("likeName")String likeName,@Param("likeSymbol")String likeSymbol);
 
 
+   int updateCurrentNumberByBlockchainLogId(@Param("updatedCurrentNumber")Integer updatedCurrentNumber,@Param("blockchainLogId")Integer blockchainLogId);
+
 
 
 

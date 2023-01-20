@@ -16,6 +16,7 @@ import org.web3j.utils.Numeric;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -118,8 +119,14 @@ public class Web3Utils {
             blockchainLog.setBlockchain(blockchainName);
             if (status==1){
                 TransactionReceipt transactionReceipt = contract.getTransactionReceipt().get();
+                String transactionHash = transactionReceipt.getTransactionHash();
+                BigInteger blockNumber = transactionReceipt.getBlockNumber();
+                String blockHash = transactionReceipt.getBlockHash();
                 blockchainLog.setContractAddress(contract.getContractAddress());
                 blockchainLog.setState(1);
+                blockchainLog.setTransactionHash(transactionHash);
+                blockchainLog.setBlocknumber(blockNumber+"");
+                blockchainLog.setBlockHash(blockHash);
                 blockchainLog.setGasSpend(transactionReceipt.getGasUsed().longValue());
             }else {
                 blockchainLog.setErrorInfo(error);
