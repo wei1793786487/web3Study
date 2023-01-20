@@ -145,5 +145,8 @@ contract MyToken is ERC721, Ownable,ERC721Burnable {
     }
 
 
+    function getTotal() public  view returns (uint256 current) {
+        return _tokenIdCounter.current()+1;
+    }
 
 }

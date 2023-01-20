@@ -2,7 +2,9 @@ package com.example.web3study;
 import cn.hutool.json.JSON;
 import com.example.web3study.controller.BlockChainInfoController;
 import com.example.web3study.extend.MyPollingTransactionReceiptProcessor;
+import com.example.web3study.pojo.Nft;
 import com.example.web3study.pojo.Web3TransactionError;
+import com.example.web3study.service.NftService;
 import com.example.web3study.smartContract.NFT721;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.web3j.crypto.*;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.DefaultBlockParameterNumber;
 import org.web3j.protocol.core.methods.response.EthFilter;
@@ -44,6 +47,11 @@ class Web3StudyApplicationTests {
     @Autowired
     TransactionManager transactionManager;
 
+    @Autowired
+    com.example.web3study.service.NftService NftService;
+
+
+
     private static final Logger logger = LoggerFactory.getLogger(BlockChainInfoController.class);
     @Test
     void contextLoads() throws Exception {
@@ -51,13 +59,18 @@ class Web3StudyApplicationTests {
     }
 
 
-    public void  bshu() throws ExecutionException, InterruptedException {
+    public void  bshu()  {
+        Nft nft = NftService.selectByPrimaryKey(37);
+        String blocknumber = nft.getBlockchainLog().getBlocknumber();
 
-        NFT721 MyToken = new NFT721("0xe4e14f91aa5863cb6e6803a0e57aad0aed12e9ef", web3j, transactionManager, staticGasProvider);
+        NFT721 MyToken = new NFT721(nft.getBlockchainLog().getContractAddress(), web3j, transactionManager, staticGasProvider);
 
-        MyToken.transferEventFlowable().subscribe(new Consumer<NFT721.TransferEventResponse>() {
+        MyToken.transferEventFlowable(DefaultBlockParameter.valueOf(new BigInteger(blocknumber)), DefaultBlockParameterName.LATEST).subscribe(new Consumer<NFT721.TransferEventResponse>() {
             @Override
-            public void accept(NFT721.TransferEventResponse transferEventResponse) throws Exception {
+            public void accept(NFT721.TransferEventResponse transferEventResponse)  {
+                System.out.println(transferEventResponse.tokenId);
+                System.out.println(transferEventResponse.to);
+                System.out.println(transferEventResponse.from);
 
             }
         });

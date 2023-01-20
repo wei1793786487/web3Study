@@ -46,7 +46,6 @@ public class NftController {
     public String nft721(Nft nft) {
         return nftServiceImpl.createNft721(nft);
     }
-
     @PostMapping("/ERC721NftList")
     public MyPageInfo<Nft> nft721All(
             @RequestParam(name = "name", required = false) String name,
@@ -55,4 +54,8 @@ public class NftController {
     ) {
         return nftServiceImpl.selectAll(name,symbol,page);
     }
+
+
+
+
 }
