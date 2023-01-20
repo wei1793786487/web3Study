@@ -1,6 +1,8 @@
 package com.example.web3study.service;
 
+import com.example.web3study.pojo.MyPageInfo;
 import com.example.web3study.pojo.Nft;
+import com.example.web3study.pojo.PageParam;
 
 public interface NftService {
 
@@ -20,6 +22,8 @@ public interface NftService {
     String createNft721(Nft nft);
 
     int insertAndLogId(Nft record,Integer logId);
+
+    MyPageInfo<Nft> selectAll(String name, String symbol, PageParam page);
 }
 
 

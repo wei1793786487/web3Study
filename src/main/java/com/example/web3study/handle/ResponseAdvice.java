@@ -44,6 +44,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResultData> exception(Exception e) {
+        //todo 异常处理有的不处理
         if (e instanceof XxException) {
              //普通异常
             return ResponseEntity.status(200).body(new ResultData((XxException) e));
@@ -51,6 +52,8 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
             return ResponseEntity.status(200).body(ResultData.fail(400,"超过最大的上传值"+((MaxUploadSizeExceededException) e).getMaxUploadSize()));
         }
         log.error(e.getMessage());
+        log.error(e.getLocalizedMessage());
+
         return  ResponseEntity.status(400).body(ResultData.fail(500,e.getMessage()));
 
     }

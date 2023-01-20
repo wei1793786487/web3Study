@@ -1,25 +1,25 @@
 package com.example.web3study.service.impl;
 
 import com.example.web3study.exception.XxException;
-import com.example.web3study.pojo.ReturnCode;
-import com.example.web3study.pojo.Web3TransactionError;
+import com.example.web3study.pojo.*;
 import com.example.web3study.smartContract.NFT721;
 import com.example.web3study.utils.Web3Utils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.example.web3study.mapper.NftMapper;
-import com.example.web3study.pojo.Nft;
 import com.example.web3study.service.NftService;
 import org.springframework.util.StringUtils;
-import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.StaticGasProvider;
 
 import java.math.BigInteger;
+import java.util.List;
 import java.util.function.BiConsumer;
 
 import static com.example.web3study.utils.Web3Utils.web3jErrorToPojo;
@@ -102,7 +102,7 @@ public class NftServiceImpl implements NftService {
                         String message = throwable.getMessage();
                         Web3TransactionError web3TransactionError = web3jErrorToPojo(message);
                         log.error(web3TransactionError.toString());
-                        Integer logId = Web3Utils.generateContractInformation(nft721, 0,web3TransactionError.getReason());
+                        Integer logId = Web3Utils.generateContractInformation(nft721, 0,web3TransactionError.getError());
                         nft.setCurrentNumber(0);
                         nft.setBlockchainLogId(logId);
                         insertAndLogId(nft,logId);
@@ -126,6 +126,15 @@ public class NftServiceImpl implements NftService {
     public int insertAndLogId(Nft record, Integer logId) {
         record.setBlockchainLogId(logId);
         return insert(record);
+    }
+
+    @Override
+    public MyPageInfo<Nft> selectAll(String name, String symbol, PageParam page) {
+        PageHelper.startPage(page.getPageNum(), page.getPageSize(), page.getOrderBy());
+//        List<Nft> nfts = nftMapper.selectAllByNameLikeOrSymbolLike(name, symbol);
+        List<Nft> nfts = nftMapper.selectAll();
+        PageInfo<Nft> nftPageInfo = new PageInfo<>(nfts);
+        return new MyPageInfo<Nft>(nftPageInfo.getTotal(),nfts);
     }
 
 }

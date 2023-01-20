@@ -1,4 +1,6 @@
 package com.example.web3study.mapper;
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
 import com.example.web3study.pojo.Nft;
 
@@ -14,4 +16,20 @@ public interface NftMapper {
     int updateByPrimaryKeySelective(Nft record);
 
     int updateByPrimaryKey(Nft record);
+
+     List<Nft> selectAll();
+
+
+   List<Nft> selectAllByNameLikeOrSymbolLike(@Param("likeName")String likeName,@Param("likeSymbol")String likeSymbol);
+
+
+
+
+
+
+
+
+
+
+
 }

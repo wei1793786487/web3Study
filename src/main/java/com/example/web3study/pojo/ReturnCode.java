@@ -2,7 +2,7 @@ package com.example.web3study.pojo;
 
 public enum ReturnCode {
     /**操作成功**/
-    RC100(100,"操作成功"),
+    RC100(200,"success"),
     /**操作失败**/
     RC999(999,"操作失败"),
 
