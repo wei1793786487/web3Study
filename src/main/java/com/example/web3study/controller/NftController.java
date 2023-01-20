@@ -49,8 +49,8 @@ public class NftController {
 
     @PostMapping("/ERC721NftList")
     public MyPageInfo<Nft> nft721All(
-            @RequestParam(name = "name", required = false, defaultValue = "1") String name,
-            @RequestParam(name = "symbol", required = false, defaultValue = "15") String symbol,
+            @RequestParam(name = "name", required = false) String name,
+            @RequestParam(name = "symbol", required = false ) String symbol,
             PageParam page
     ) {
         return nftServiceImpl.selectAll(name,symbol,page);

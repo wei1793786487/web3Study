@@ -3,9 +3,9 @@ package com.example.web3study.service.impl;
 import com.example.web3study.exception.XxException;
 import com.example.web3study.pojo.*;
 import com.example.web3study.smartContract.NFT721;
+import com.example.web3study.utils.ObjectTool;
 import com.example.web3study.utils.Web3Utils;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -131,10 +131,8 @@ public class NftServiceImpl implements NftService {
     @Override
     public MyPageInfo<Nft> selectAll(String name, String symbol, PageParam page) {
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), page.getOrderBy());
-//        List<Nft> nfts = nftMapper.selectAllByNameLikeOrSymbolLike(name, symbol);
-        List<Nft> nfts = nftMapper.selectAll();
-        PageInfo<Nft> nftPageInfo = new PageInfo<>(nfts);
-        return new MyPageInfo<Nft>(nftPageInfo.getTotal(),nfts);
+        List<Nft> nfts = nftMapper.selectAllByNameLikeOrSymbolLike(name, symbol);
+        return ObjectTool.getPageObject(nfts);
     }
 
 }

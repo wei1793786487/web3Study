@@ -6,7 +6,6 @@ import com.example.web3study.pojo.PageParam;
 
 public interface NftService {
 
-
     int deleteByPrimaryKey(Integer id);
 
     int insert(Nft record);
@@ -21,7 +20,7 @@ public interface NftService {
 
     String createNft721(Nft nft);
 
-    int insertAndLogId(Nft record,Integer logId);
+    int insertAndLogId(Nft record, Integer logId);
 
     MyPageInfo<Nft> selectAll(String name, String symbol, PageParam page);
 }
