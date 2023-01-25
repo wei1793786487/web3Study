@@ -1,4 +1,4 @@
-package com.example.web3study.pojo;
+package com.example.web3study.pojo.common;
 
 import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.IPage;

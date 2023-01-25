@@ -1,8 +1,9 @@
 package com.example.web3study.service;
 
 import com.example.web3study.pojo.Admin;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface AdminService {
+public interface AdminService extends UserDetailsService {
 
 
     int deleteByPrimaryKey(Integer id);
@@ -18,4 +19,5 @@ public interface AdminService {
     int updateByPrimaryKey(Admin record);
 
 }
+
 

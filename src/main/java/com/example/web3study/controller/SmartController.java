@@ -1,21 +1,13 @@
 package com.example.web3study.controller;
 
 
-import com.example.web3study.exception.XxException;
-import com.example.web3study.extend.MyPollingTransactionReceiptProcessor;
-import com.example.web3study.pojo.ReturnCode;
-import com.example.web3study.pojo.Web3TransactionError;
+import com.example.web3study.pojo.common.Web3TransactionError;
 import com.example.web3study.smartContract.NFT721;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
-import org.web3j.tx.RawTransactionManager;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.StaticGasProvider;
 

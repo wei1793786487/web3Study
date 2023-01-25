@@ -1,8 +1,8 @@
 package com.example.web3study.controller;
 
-import com.example.web3study.pojo.MyPageInfo;
+import com.example.web3study.pojo.common.MyPageInfo;
 import com.example.web3study.pojo.Nft;
-import com.example.web3study.pojo.PageParam;
+import com.example.web3study.pojo.common.PageParam;
 import com.example.web3study.service.impl.NftServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

@@ -1,12 +1,24 @@
 package com.example.web3study.service.impl;
 
+import com.example.web3study.exception.XxException;
+import com.example.web3study.pojo.common.ReturnCode;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.example.web3study.mapper.AdminMapper;
 import com.example.web3study.pojo.Admin;
 import com.example.web3study.service.AdminService;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
+@Slf4j
 public class AdminServiceImpl implements AdminService {
 
     @Resource
@@ -42,5 +54,19 @@ public class AdminServiceImpl implements AdminService {
         return adminMapper.updateByPrimaryKey(record);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if (!StringUtils.hasText(username)) {
+            log.error("账户不存在");
+            throw new UsernameNotFoundException("账号不存在");
+        }
+        Admin oneByName = adminMapper.findOneByName(username);
+        if (ObjectUtils.isEmpty(oneByName)){
+            log.error("用户名不存在");
+            throw new UsernameNotFoundException(username+"不存在");
+        }
+        return oneByName;
+    }
 }
+
 

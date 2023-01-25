@@ -1,16 +1,9 @@
 package com.example.web3study.service;
 
-import com.example.web3study.exception.XxException;
 import com.example.web3study.pojo.*;
-import com.example.web3study.service.impl.NftServiceImpl;
+import com.example.web3study.pojo.common.MyPageInfo;
+import com.example.web3study.pojo.common.PageParam;
 import com.example.web3study.smartContract.NFT721;
-import com.example.web3study.utils.Web3Utils;
-import jdk.nashorn.internal.runtime.FindProperty;
-
-import java.math.BigInteger;
-import java.util.function.BiConsumer;
-
-import static com.example.web3study.utils.Web3Utils.web3jErrorToPojo;
 
 public interface NftService {
 

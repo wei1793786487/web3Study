@@ -7,10 +7,11 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="system_public_key" jdbcType="VARCHAR" property="systemPublicKey" />
     <result column="system_private_key" jdbcType="VARCHAR" property="systemPrivateKey" />
+    <result column="token_expire_second" jdbcType="INTEGER" property="tokenExpireSecond" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, system_public_key, system_private_key
+    id, system_public_key, system_private_key, token_expire_second
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->

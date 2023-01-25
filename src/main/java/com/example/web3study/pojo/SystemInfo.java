@@ -9,4 +9,9 @@ public class SystemInfo {
     private String systemPublicKey;
 
     private String systemPrivateKey;
+
+    /**
+     * token过期时间
+     */
+    private Integer tokenExpireSecond;
 }

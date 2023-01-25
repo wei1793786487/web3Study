@@ -1,4 +1,6 @@
 package com.example.web3study.mapper;
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
 import com.example.web3study.pojo.Admin;
 
@@ -14,4 +16,9 @@ public interface AdminMapper {
     int updateByPrimaryKeySelective(Admin record);
 
     int updateByPrimaryKey(Admin record);
+
+   Admin findOneByName(@Param("name")String name);
+
+
+
 }

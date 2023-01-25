@@ -1,11 +1,10 @@
 package com.example.web3study.handle;
 
 import com.example.web3study.exception.XxException;
-import com.example.web3study.pojo.ResultData;
+import com.example.web3study.pojo.common.ResultData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

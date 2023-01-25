@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
@@ -68,6 +70,12 @@ public class CreateBeanHandle {
         log.info("Ethereum Chain Id: {}",chainId);
         return new RawTransactionManager(
                 web3j, credentials(), chainId.longValue(), new MyPollingTransactionReceiptProcessor(web3j));
+    }
+
+
+    @Bean
+    public PasswordEncoder createPasswordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
 

@@ -1,11 +1,12 @@
 package com.example.web3study.pojo;
 
-import java.io.PipedReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,7 +32,13 @@ public class Admin implements UserDetails {
     /**
      * 管理员密码
      */
+    @JsonIgnore
     private String password;
+
+    /**
+     * 上次登录的ip
+     */
+    private String ip;
 
     /**
      * 上次登录的地址
@@ -69,21 +76,21 @@ public class Admin implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return this.status==0;
+        return this.status==1;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

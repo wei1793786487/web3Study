@@ -2,17 +2,16 @@ package com.example.web3study.utils;
 
 import com.example.web3study.exception.XxException;
 import com.example.web3study.pojo.*;
+import com.example.web3study.pojo.common.ReturnCode;
+import com.example.web3study.pojo.common.Web3TransactionError;
 import com.example.web3study.service.BlockchainLogService;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.web3j.crypto.*;
-import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.Contract;
-import org.web3j.tx.TransactionManager;
-import org.web3j.tx.gas.StaticGasProvider;
 import org.web3j.utils.Numeric;
 
 import javax.annotation.Resource;

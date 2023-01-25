@@ -1,10 +1,13 @@
 package com.example.web3study.service;
 
 import com.example.web3study.pojo.SystemInfo;
-public interface SystemInfoService{
+
+public interface SystemInfoService {
 
 
     SystemInfo getSystemInfo();
 
 
+    SystemInfo selectByPrimaryKey(Integer id);
 }
+

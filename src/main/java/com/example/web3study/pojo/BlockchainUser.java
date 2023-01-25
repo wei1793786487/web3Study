@@ -1,5 +1,6 @@
 package com.example.web3study.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 @Data
@@ -9,6 +10,7 @@ public class BlockchainUser {
     /**
     * 私钥
     */
+    @JsonIgnore
     private String privateKey;
 
     /**

@@ -5,8 +5,9 @@ import javax.annotation.Resource;
 import com.example.web3study.mapper.SystemInfoMapper;
 import com.example.web3study.pojo.SystemInfo;
 import com.example.web3study.service.SystemInfoService;
+
 @Service
-public class SystemInfoServiceImpl implements SystemInfoService{
+public class SystemInfoServiceImpl implements SystemInfoService {
 
     @Resource
     private SystemInfoMapper systemInfoMapper;
@@ -16,4 +17,10 @@ public class SystemInfoServiceImpl implements SystemInfoService{
     public SystemInfo getSystemInfo() {
         return systemInfoMapper.selectByPrimaryKey(0);
     }
+
+    @Override
+    public SystemInfo selectByPrimaryKey(Integer id) {
+        return systemInfoMapper.selectByPrimaryKey(id);
+    }
 }
+

@@ -18,6 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.web3j.abi.EventEncoder;
 import org.web3j.abi.TypeEncoder;
 import org.web3j.abi.datatypes.generated.Uint256;
@@ -51,23 +53,27 @@ class Web3StudyApplicationTests {
     com.example.web3study.service.NftService NftService;
 
 
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     private static final Logger logger = LoggerFactory.getLogger(BlockChainInfoController.class);
     @Test
     void contextLoads() throws Exception {
-        loadKey();
+        gentalPass();
     }
 
 
-    void  loadKey(){
+    void  gentalPass(){
+        String lx1793786487 = passwordEncoder.encode("123");
+        System.out.println(lx1793786487);
+    }
 
+    void  loadKey(){
         SystemInfo systemInfo = systemInfoService.getSystemInfo();
         System.out.println(systemInfo);
         RSA rsa = new RSA(systemInfo.getSystemPrivateKey(),systemInfo.getSystemPublicKey());
         System.out.println(rsa.getPrivateKeyBase64());
         System.out.println(rsa.getPublicKeyBase64());
         jwtUser lw = new jwtUser().setName("老王").setPhone("19212121").setUid(2);
-
         String s = JwtUtils.generateTokenExpireInSeconds(lw, rsa.getPrivateKey(), 300);
         System.out.println(s);
     }

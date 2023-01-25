@@ -2,7 +2,7 @@ package com.example.web3study.utils;
 
 import cn.hutool.http.HttpRequest;
 import com.example.web3study.exception.XxException;
-import com.example.web3study.pojo.ReturnCode;
+import com.example.web3study.pojo.common.ReturnCode;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
