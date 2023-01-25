@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.web3study.mapper.BlockchainUserMapper">
+  <resultMap id="BaseResultMap" type="com.example.web3study.pojo.BlockchainUser">
+    <!--@mbg.generated-->
+    <!--@Table blockchain_user-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="private_key" jdbcType="VARCHAR" property="privateKey" />
+    <result column="virtual_resources" jdbcType="VARCHAR" property="virtualResources" />
+    <result column="system_token_name" jdbcType="VARCHAR" property="systemTokenName" />
+    <result column="system_token_number" jdbcType="VARCHAR" property="systemTokenNumber" />
+    <result column="system_token_address" jdbcType="VARCHAR" property="systemTokenAddress" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, private_key, virtual_resources, system_token_name, system_token_number, system_token_address
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from blockchain_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from blockchain_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.web3study.pojo.BlockchainUser" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into blockchain_user (private_key, virtual_resources, system_token_name, 
+      system_token_number, system_token_address)
+    values (#{privateKey,jdbcType=VARCHAR}, #{virtualResources,jdbcType=VARCHAR}, #{systemTokenName,jdbcType=VARCHAR}, 
+      #{systemTokenNumber,jdbcType=VARCHAR}, #{systemTokenAddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.web3study.pojo.BlockchainUser" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into blockchain_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="privateKey != null">
+        private_key,
+      </if>
+      <if test="virtualResources != null">
+        virtual_resources,
+      </if>
+      <if test="systemTokenName != null">
+        system_token_name,
+      </if>
+      <if test="systemTokenNumber != null">
+        system_token_number,
+      </if>
+      <if test="systemTokenAddress != null">
+        system_token_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="privateKey != null">
+        #{privateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="virtualResources != null">
+        #{virtualResources,jdbcType=VARCHAR},
+      </if>
+      <if test="systemTokenName != null">
+        #{systemTokenName,jdbcType=VARCHAR},
+      </if>
+      <if test="systemTokenNumber != null">
+        #{systemTokenNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="systemTokenAddress != null">
+        #{systemTokenAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.web3study.pojo.BlockchainUser">
+    <!--@mbg.generated-->
+    update blockchain_user
+    <set>
+      <if test="privateKey != null">
+        private_key = #{privateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="virtualResources != null">
+        virtual_resources = #{virtualResources,jdbcType=VARCHAR},
+      </if>
+      <if test="systemTokenName != null">
+        system_token_name = #{systemTokenName,jdbcType=VARCHAR},
+      </if>
+      <if test="systemTokenNumber != null">
+        system_token_number = #{systemTokenNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="systemTokenAddress != null">
+        system_token_address = #{systemTokenAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.web3study.pojo.BlockchainUser">
+    <!--@mbg.generated-->
+    update blockchain_user
+    set private_key = #{privateKey,jdbcType=VARCHAR},
+      virtual_resources = #{virtualResources,jdbcType=VARCHAR},
+      system_token_name = #{systemTokenName,jdbcType=VARCHAR},
+      system_token_number = #{systemTokenNumber,jdbcType=VARCHAR},
+      system_token_address = #{systemTokenAddress,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

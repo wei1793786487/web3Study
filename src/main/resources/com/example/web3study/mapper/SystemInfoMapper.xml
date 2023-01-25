@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.web3study.mapper.SystemInfoMapper">
+  <resultMap id="BaseResultMap" type="com.example.web3study.pojo.SystemInfo">
+    <!--@mbg.generated-->
+    <!--@Table system_info-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="system_public_key" jdbcType="VARCHAR" property="systemPublicKey" />
+    <result column="system_private_key" jdbcType="VARCHAR" property="systemPrivateKey" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, system_public_key, system_private_key
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from system_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>
