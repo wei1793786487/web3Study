@@ -15,7 +15,7 @@ interface WWT{
 
 
 
-contract MyToken is ERC721, Ownable,ERC721Burnable {
+contract NFT721 is ERC721, Ownable,ERC721Burnable {
     using Counters for Counters.Counter;
 
     string  private baseUrl;
@@ -146,7 +146,7 @@ contract MyToken is ERC721, Ownable,ERC721Burnable {
 
 
     function getTotal() public  view returns (uint256 current) {
-        return _tokenIdCounter.current()+1;
+        return _tokenIdCounter.current()-1;
     }
 
 }

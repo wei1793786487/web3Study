@@ -1,8 +1,16 @@
 package com.example.web3study.service;
 
-import com.example.web3study.pojo.MyPageInfo;
-import com.example.web3study.pojo.Nft;
-import com.example.web3study.pojo.PageParam;
+import com.example.web3study.exception.XxException;
+import com.example.web3study.pojo.*;
+import com.example.web3study.service.impl.NftServiceImpl;
+import com.example.web3study.smartContract.NFT721;
+import com.example.web3study.utils.Web3Utils;
+import jdk.nashorn.internal.runtime.FindProperty;
+
+import java.math.BigInteger;
+import java.util.function.BiConsumer;
+
+import static com.example.web3study.utils.Web3Utils.web3jErrorToPojo;
 
 public interface NftService {
 
@@ -23,6 +31,14 @@ public interface NftService {
     int insertAndLogId(Nft record, Integer logId);
 
     MyPageInfo<Nft> selectAll(String name, String symbol, PageParam page);
+
+    BlockchainLog selectBlockLogByNftService(Integer id);
+
+    void transactionNft721(NFT721 nft721, String to, Long tokenId);
+
+    NFT721 getNft721Instance(String address);
+
+
 }
 
 

@@ -1,6 +1,7 @@
 package com.example.web3study.service.impl;
 
 import com.example.web3study.exception.XxException;
+import com.example.web3study.service.NftService;
 import com.example.web3study.pojo.*;
 import com.example.web3study.smartContract.NFT721;
 import com.example.web3study.utils.ObjectTool;
@@ -12,9 +13,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.example.web3study.mapper.NftMapper;
-import com.example.web3study.service.NftService;
 import org.springframework.util.StringUtils;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.methods.response.TransactionReceipt;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.StaticGasProvider;
 
@@ -82,16 +83,12 @@ public class NftServiceImpl implements NftService {
 
     @Override
     public String createNft721(Nft nft) {
-
         nft.setType(1);
-
         //Todo 没做默认为0
         nft.setAuthorId(0);
-
         if (!StringUtils.hasText(nft.getImage())) {
             nft.setImage(nodeUrl + nft.getIpfsHash() + "/");
         }
-
         NFT721.deploy(web3j, transactionManager, staticGasProvider,
                 nft.getName(), nft.getSymbol(), BigInteger.valueOf(nft.getMintNumber()),
                 nft.getImage()).sendAsync().whenCompleteAsync(new BiConsumer<NFT721, Throwable>() {
@@ -111,7 +108,7 @@ public class NftServiceImpl implements NftService {
                         Integer logId = Web3Utils.generateContractInformation(nft721, 1);
                         nft.setBlockchainLogId(logId);
                         nft.setCurrentNumber(nft.getMintNumber());
-                        log.info("部署成功" + nft);
+                        log.info("交易成功" + nft);
                         insertAndLogId(nft,logId);
                     }
                 } catch (Exception e) {
@@ -134,6 +131,27 @@ public class NftServiceImpl implements NftService {
         List<Nft> nfts = nftMapper.selectAllByNameLikeOrSymbolLike(name, symbol);
         return ObjectTool.getPageObject(nfts);
     }
+
+    @Override
+    public BlockchainLog selectBlockLogByNftService(Integer id) {
+        return nftMapper.selectByPrimaryKey(id).getBlockchainLog();
+    }
+
+    @Override
+    public void transactionNft721(NFT721 nft721,String to, Long tokenId) {
+        nft721.transferByAdmin(to, BigInteger.valueOf(tokenId)).sendAsync().whenComplete(new BiConsumer<TransactionReceipt, Throwable>() {
+            @Override
+            public void accept(TransactionReceipt transactionReceipt, Throwable throwable) {
+
+            }
+        });
+    }
+
+    @Override
+    public NFT721 getNft721Instance(String address) {
+        return new NFT721(address, web3j, transactionManager, staticGasProvider);
+    }
+
 
 }
 

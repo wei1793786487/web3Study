@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.print.attribute.standard.PrinterURI;
 
 @Data
-public class Nft {
+public class Nft extends Contract{
     /**
      * 主键
      */
@@ -68,5 +68,8 @@ public class Nft {
     private Date createTime=new Date();
 
 
-    private BlockchainLog blockchainLog;
+
+    public BlockchainLog getBlockchainLog() {
+        return super.getBlockchainLog();
+    }
 }
