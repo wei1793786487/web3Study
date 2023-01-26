@@ -1,4 +1,5 @@
 package com.example.web3study.mapper;
+import com.example.web3study.pojo.BlockchainUser;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
@@ -18,6 +19,13 @@ public interface AdminMapper {
     int updateByPrimaryKey(Admin record);
 
    Admin findOneByName(@Param("name")String name);
+
+
+  Admin findOneByBuid(@Param("buid")Integer buid);
+
+
+
+
 
 
 

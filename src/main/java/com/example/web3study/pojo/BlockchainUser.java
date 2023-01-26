@@ -32,4 +32,6 @@ public class BlockchainUser {
     * 系统自定义货币的地址
     */
     private String systemTokenAddress;
+
+    
 }

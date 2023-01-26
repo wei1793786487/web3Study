@@ -55,6 +55,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Admin findOneByBuid(Integer buid) {
+        return adminMapper.findOneByBuid(buid);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (!StringUtils.hasText(username)) {
             log.error("账户不存在");

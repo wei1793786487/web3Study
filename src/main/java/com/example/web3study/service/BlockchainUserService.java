@@ -1,5 +1,6 @@
 package com.example.web3study.service;
 
+import com.example.web3study.pojo.Admin;
 import com.example.web3study.pojo.BlockchainUser;
 public interface BlockchainUserService{
 
@@ -16,4 +17,8 @@ public interface BlockchainUserService{
 
     int updateByPrimaryKey(BlockchainUser record);
 
+    BlockchainUser findOneByPrivateKey(String privateKey);
+
+
+    Admin findAdminByPrivateKey(String privateKey);
 }

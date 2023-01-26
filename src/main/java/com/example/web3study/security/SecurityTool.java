@@ -16,7 +16,7 @@ public class SecurityTool {
     SystemInfoService systemInfoService;
 
     public String generateJwt(jwtUser jwtUser){
-        //TODO 需要redis缓存一下 可以更快
+        // TODO 需要redis缓存一下 可以更快
         SystemInfo systemInfo = systemInfoService.getSystemInfo();
         System.out.println(systemInfo);
         RSA rsa = new RSA(systemInfo.getSystemPrivateKey(),systemInfo.getSystemPublicKey());

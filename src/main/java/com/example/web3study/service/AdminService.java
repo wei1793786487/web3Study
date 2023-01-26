@@ -18,6 +18,8 @@ public interface AdminService extends UserDetailsService {
 
     int updateByPrimaryKey(Admin record);
 
+    Admin findOneByBuid(Integer buid);
+
 }
 
 

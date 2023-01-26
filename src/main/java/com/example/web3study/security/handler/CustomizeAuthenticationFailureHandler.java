@@ -31,8 +31,11 @@ public class CustomizeAuthenticationFailureHandler implements AuthenticationFail
             resultData = ResultData.fail(ReturnCode.USER_ACCOUNT_EXPIRED);
         } else if (e instanceof BadCredentialsException) {
             //如果抛出 UsernameNotFoundException 也会被其捕获 这里不做处理了 其实可以返回用户名或者密码错误
-            resultData= ResultData.fail(ReturnCode.USER_CREDENTIALS_ERROR);
-
+            //处理了
+            //resultData= ResultData.fail(ReturnCode.USER_CREDENTIALS_ERROR);
+            resultData = new ResultData<>();
+            resultData.setStatus(400);
+            resultData.setMessage(e.getMessage());
         } else if (e instanceof CredentialsExpiredException) {
             //密码过期
             resultData = ResultData.fail(ReturnCode.USER_CREDENTIALS_ERROR);

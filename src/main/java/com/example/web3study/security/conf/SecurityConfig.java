@@ -1,9 +1,14 @@
 package com.example.web3study.security.conf;
 
 import com.example.web3study.security.handler.*;
+import com.example.web3study.security.provider.PrivateKeyLoginAuthenticationProvider;
+import com.example.web3study.security.provider.PrivateKeyLoginFilter;
 import com.example.web3study.service.AdminService;
+import com.example.web3study.service.BlockchainUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,7 +16,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -46,7 +50,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AdminService  adminService;
 
     @Autowired
+    private BlockchainUserService blockchainUserService;
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+
+
 
     /**
      * 认证用户的来源
@@ -60,6 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          * 设置为数据库认证并指定是什么认证
          */
         auth.userDetailsService(adminService).passwordEncoder(passwordEncoder);
+        auth.authenticationProvider(privateKeyLoginAuthenticationProvider());
 
     }
 
@@ -77,6 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/**").permitAll()
                 .and()
+                .addFilterBefore(privateKeyLoginFilter(),UsernamePasswordAuthenticationFilter.class)
                 .formLogin().usernameParameter("user_name").passwordParameter("pass_word")
                 .permitAll()
                 //成功的与失败的处理器
@@ -95,4 +106,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     }
+    @Bean
+    public PrivateKeyLoginAuthenticationProvider privateKeyLoginAuthenticationProvider() {
+            return new PrivateKeyLoginAuthenticationProvider(blockchainUserService);
+    }
+
+    @Bean
+    public PrivateKeyLoginFilter privateKeyLoginFilter() {
+        PrivateKeyLoginFilter privateKeyLoginFilter = new PrivateKeyLoginFilter();
+        privateKeyLoginFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+        privateKeyLoginFilter.setAuthenticationFailureHandler(customizeAuthenticationFailureHandler);
+        return privateKeyLoginFilter;
+    }
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
+
+
+
 }
