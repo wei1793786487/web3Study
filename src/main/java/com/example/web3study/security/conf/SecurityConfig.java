@@ -1,10 +1,13 @@
 package com.example.web3study.security.conf;
 
 import com.example.web3study.security.handler.*;
+import com.example.web3study.security.provider.PhoneLoginAuthenticationProvider;
+import com.example.web3study.security.provider.PhoneLoginFilter;
 import com.example.web3study.security.provider.PrivateKeyLoginAuthenticationProvider;
 import com.example.web3study.security.provider.PrivateKeyLoginFilter;
 import com.example.web3study.service.AdminService;
 import com.example.web3study.service.BlockchainUserService;
+import com.example.web3study.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,6 +53,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AdminService  adminService;
 
     @Autowired
+    private UsersService usersService;
+
+    @Autowired
     private BlockchainUserService blockchainUserService;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -70,6 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
          */
         auth.userDetailsService(adminService).passwordEncoder(passwordEncoder);
         auth.authenticationProvider(privateKeyLoginAuthenticationProvider());
+        auth.authenticationProvider(phoneLoginAuthenticationProvider());
 
     }
 
@@ -88,6 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .and()
                 .addFilterBefore(privateKeyLoginFilter(),UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(phoneLoginFilter(),UsernamePasswordAuthenticationFilter.class)
                 .formLogin().usernameParameter("user_name").passwordParameter("pass_word")
                 .permitAll()
                 //成功的与失败的处理器
@@ -118,6 +126,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         privateKeyLoginFilter.setAuthenticationFailureHandler(customizeAuthenticationFailureHandler);
         return privateKeyLoginFilter;
     }
+
+    @Bean
+    public PhoneLoginAuthenticationProvider phoneLoginAuthenticationProvider() {
+        return new PhoneLoginAuthenticationProvider(usersService,passwordEncoder);
+    }
+
+    @Bean
+    public PhoneLoginFilter phoneLoginFilter() {
+        PhoneLoginFilter phoneLoginFilter = new PhoneLoginFilter();
+        phoneLoginFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+        phoneLoginFilter.setAuthenticationFailureHandler(customizeAuthenticationFailureHandler);
+        return phoneLoginFilter;
+    }
+
     @Bean
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {

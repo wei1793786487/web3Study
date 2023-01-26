@@ -2,6 +2,8 @@ package com.example.web3study.service;
 
 import com.example.web3study.pojo.Admin;
 import com.example.web3study.pojo.BlockchainUser;
+import com.example.web3study.pojo.Users;
+
 public interface BlockchainUserService{
 
 
@@ -21,4 +23,6 @@ public interface BlockchainUserService{
 
 
     Admin findAdminByPrivateKey(String privateKey);
+
+    Users findUsersByPrivateKey(String privateKey);
 }

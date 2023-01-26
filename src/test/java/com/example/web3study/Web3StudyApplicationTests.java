@@ -63,7 +63,7 @@ class Web3StudyApplicationTests {
 
 
     void  gentalPass(){
-        String lx1793786487 = passwordEncoder.encode("123");
+        String lx1793786487 = passwordEncoder.encode("996123");
         System.out.println(lx1793786487);
     }
 

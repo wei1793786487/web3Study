@@ -12,5 +12,6 @@ public class jwtUser {
      private String name;
 
      private String phone;
+     private String role;
 
 }

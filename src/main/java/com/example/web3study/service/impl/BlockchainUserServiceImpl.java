@@ -1,7 +1,9 @@
 package com.example.web3study.service.impl;
 
 import com.example.web3study.pojo.Admin;
+import com.example.web3study.pojo.Users;
 import com.example.web3study.service.AdminService;
+import com.example.web3study.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -16,6 +18,8 @@ public class BlockchainUserServiceImpl implements BlockchainUserService{
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private UsersService usersService;
     @Resource
     private BlockchainUserMapper blockchainUserMapper;
 
@@ -61,6 +65,15 @@ public class BlockchainUserServiceImpl implements BlockchainUserService{
             return null;
         }
         return adminService.findOneByBuid(oneByPrivateKey.getId());
+    }
+
+    @Override
+    public Users findUsersByPrivateKey(String privateKey) {
+        BlockchainUser oneByPrivateKey = findOneByPrivateKey(privateKey);
+        if (ObjectUtils.isEmpty(oneByPrivateKey)){
+            return null;
+        }
+        return usersService.findOneByBuid(oneByPrivateKey.getId());
     }
 
 }
