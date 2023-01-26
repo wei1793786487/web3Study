@@ -5,6 +5,7 @@ import com.example.web3study.pojo.Users;
 import com.example.web3study.security.SecurityTool;
 import com.example.web3study.security.jwtUser;
 import com.example.web3study.security.provider.PhoneLoginFilterAuthenticationToken;
+import com.example.web3study.security.provider.PrivateKeyLoginFilterAuthenticationToken;
 import com.example.web3study.utils.JsonWriteUtlis;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +42,23 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
             JsonWriteUtlis.sendJsonSuccess(response,jwt);
         }else if (authentication instanceof PhoneLoginFilterAuthenticationToken){
             PhoneLoginFilterAuthenticationToken principal1 = (PhoneLoginFilterAuthenticationToken) authentication;
-            Users users = (Users) principal1.getDetails();
-            jwtUser jwtUser = new jwtUser().setPhone(users.getPhone()).setUid(users.getId()).setRole("user");
-            String jwt = securityTool.generateJwt(jwtUser);
-            JsonWriteUtlis.sendJsonSuccess(response,jwt);
-        }else {
+
+            writeUserToken(principal1,response);
+        }else if (authentication instanceof PrivateKeyLoginFilterAuthenticationToken){
+            PrivateKeyLoginFilterAuthenticationToken principal1 = (PrivateKeyLoginFilterAuthenticationToken) authentication;
+
+            writeUserToken(principal1,response);
+        }
+        else {
             //不会触发这个 万一有黑客触发了 骂他
             JsonWriteUtlis.sendJsonSuccess(response,"sb");
 
         }
+    }
+    public void  writeUserToken(Authentication authentication,HttpServletResponse response) throws IOException {
+        Users users = (Users) authentication.getDetails();
+        jwtUser jwtUser = new jwtUser().setPhone(users.getPhone()).setUid(users.getId()).setRole("user");
+        String jwt = securityTool.generateJwt(jwtUser);
+        JsonWriteUtlis.sendJsonSuccess(response,jwt);
     }
 }
