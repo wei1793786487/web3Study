@@ -3,6 +3,7 @@ package com.example.web3study.controller;
 import com.example.web3study.pojo.common.MyPageInfo;
 import com.example.web3study.pojo.Nft;
 import com.example.web3study.pojo.common.PageParam;
+import com.example.web3study.security.conf.AdminRestController;
 import com.example.web3study.service.impl.NftServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import javax.annotation.Resource;
  *
  * @author xxxxx
  */
-@RestController
+@AdminRestController
 @Slf4j
 @RequestMapping("/nft")
 public class NftController {

@@ -2,6 +2,7 @@ package com.example.web3study.controller;
 
 
 import com.example.web3study.pojo.common.Web3TransactionError;
+import com.example.web3study.security.conf.AdminRestController;
 import com.example.web3study.smartContract.NFT721;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import java.util.function.BiConsumer;
 
 import static com.example.web3study.utils.Web3Utils.web3jErrorToPojo;
 
-@RestController
+@AdminRestController
 @RequestMapping("/smart")
 public class SmartController {
     @Autowired

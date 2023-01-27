@@ -1,5 +1,6 @@
 package com.example.web3study.controller;
 
+import com.example.web3study.security.conf.AdminRestController;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@RestController
+@AdminRestController
 @RequestMapping("/chainInfo")
 public class BlockChainInfoController {
 
