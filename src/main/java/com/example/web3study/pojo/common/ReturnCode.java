@@ -24,7 +24,9 @@ public enum ReturnCode {
     IPFS_UPLOAD_ERROR(2002,"ipfs文件上传异常"),
     NFT_MINT_ERROR(2003,"nft铸造异常"),
 
-    PARAMETER_ERROR(4004,"参数异常");
+    PARAMETER_ERROR(4004,"参数异常"),
+
+    RECAPTCHA_ERROR(10086,"验证码异常");
 
 
 

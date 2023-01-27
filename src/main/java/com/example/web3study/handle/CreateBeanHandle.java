@@ -1,6 +1,5 @@
 package com.example.web3study.handle;
 
-import com.example.web3study.extend.MyPollingTransactionReceiptProcessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

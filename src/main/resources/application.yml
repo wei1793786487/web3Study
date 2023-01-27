@@ -43,3 +43,9 @@ mybatis:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
+
+google:
+  recaptcha:
+    key:
+      site: 6LddJzEkAAAAAMX7_8cXpxmhqYlrBRUqPOCQjcX0
+      secret: 6LddJzEkAAAAAMA2eKHrXYToqezjZopzBr68A98J
