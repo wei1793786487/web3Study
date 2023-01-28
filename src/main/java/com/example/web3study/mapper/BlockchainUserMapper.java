@@ -1,7 +1,6 @@
 package com.example.web3study.mapper;
-import org.apache.ibatis.annotations.Param;
 
-import com.example.web3study.pojo.BlockchainUser;
+import com.example.web3study.pojo.BlockchainUser;import org.apache.ibatis.annotations.Param;
 
 public interface BlockchainUserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,7 +15,5 @@ public interface BlockchainUserMapper {
 
     int updateByPrimaryKey(BlockchainUser record);
 
-    BlockchainUser findOneByPrivateKey(@Param("privateKey")String privateKey);
-
-	
+    BlockchainUser findOneByPrivateKey(@Param("privateKey") String privateKey);
 }

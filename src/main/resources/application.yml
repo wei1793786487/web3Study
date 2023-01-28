@@ -7,7 +7,16 @@ spring:
     url: jdbc:mysql://localhost:3306/web3?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
-
+  redis:
+    database: 0 #索引
+    host: 127.0.0.1
+    port: 6379
+    #    password: root #修改成对应自己的redis密码
+    lettuce:
+      pool:
+        max-active: 8 #最大连接数
+        max-idle: 8 #最大空闲连接
+        min-idle: 1 #最小空闲连接
   servlet:
     multipart:
       max-file-size: 10MB
@@ -22,6 +31,7 @@ server:
 
 web3j:
   blockchain_name: 测试私链
+  blockchain_resources_name: 以太币
   private_key: 3cf44c4d4252d9d9277f5503dac4e365f56c69cff5d1396da4f156dc115ddcac
   gas_price: 293932
   gas_limit: 3000000
@@ -29,6 +39,7 @@ web3j:
 #  client-address: "https://opbningxia.bsngate.com:18602/api/cbec55bcc1aa422c9cd0e99ea100290e/rpc"
 #  client-address: "http://127.0.0.1:7545"
   client-address: "http://192.168.1.250:8545"
+  system_token_address : "0x5dF0DAd32b92207317f9D010D1Ee02F1D81EedD1"
 
 
 ipfs:

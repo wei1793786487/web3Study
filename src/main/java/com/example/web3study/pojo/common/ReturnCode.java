@@ -26,7 +26,7 @@ public enum ReturnCode {
 
     PARAMETER_ERROR(4004,"参数异常"),
 
-    RECAPTCHA_ERROR(10086,"验证码异常");
+    RECAPTCHA_ERROR(10086,"验证码异常"), REGISTER_PHONE_ERROR(10087, "验证码失效,请重新发送");
 
 
 

@@ -8,17 +8,20 @@ import cn.hutool.crypto.asymmetric.SM2;
 import com.example.web3study.controller.BlockChainInfoController;
 import com.example.web3study.pojo.Nft;
 import com.example.web3study.pojo.SystemInfo;
+import com.example.web3study.pojo.common.CurrencyInformation;
 import com.example.web3study.security.JwtUtils;
 import com.example.web3study.security.jwtUser;
 import com.example.web3study.service.SystemInfoService;
 import com.example.web3study.smartContract.NFT721;
+import com.example.web3study.smartContract.WWT;
+import com.example.web3study.utils.RedisUtils;
 import io.reactivex.functions.Consumer;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.web3j.abi.EventEncoder;
 import org.web3j.abi.TypeEncoder;
@@ -42,6 +45,8 @@ class Web3StudyApplicationTests {
     @Autowired
     private StaticGasProvider staticGasProvider;
 
+    @Autowired
+    private RedisUtils redisUtils;
 
     @Autowired
     TransactionManager transactionManager;
@@ -52,13 +57,30 @@ class Web3StudyApplicationTests {
     @Autowired
     com.example.web3study.service.NftService NftService;
 
+    @Value("${web3j.system_token_address}")
+    private String tokenAddress;
 
+    @Value("${web3j.blockchain_resources_name}")
+    private String resourcesName;
     @Autowired
     private PasswordEncoder passwordEncoder;
     private static final Logger logger = LoggerFactory.getLogger(BlockChainInfoController.class);
     @Test
     void contextLoads() throws Exception {
-        gentalPass();
+
+        WWT wwt = WWT.load(tokenAddress,web3j, transactionManager, staticGasProvider);
+        CurrencyInformation currencyInformation = new CurrencyInformation();
+        currencyInformation.setAddress(tokenAddress);
+        String name = wwt.name().send();
+        BigInteger decimals = wwt.decimals().send();
+        String owner = wwt.owner().send();
+        BigInteger totalSupply = wwt.totalSupply().send();
+        currencyInformation.setDecimals(decimals.longValue());
+        currencyInformation.setName(name);
+        currencyInformation.setOwner(owner);
+        currencyInformation.setVirtualResources(resourcesName);
+        currencyInformation.setTotalNumber(totalSupply.longValue());
+        System.out.println("初始化货币"+currencyInformation.toString());
     }
 
 

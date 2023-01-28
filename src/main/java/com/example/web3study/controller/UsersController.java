@@ -6,7 +6,6 @@ import com.example.web3study.service.impl.UsersServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.annotation.security.RolesAllowed;
 
 /**
  * (users)表控制层

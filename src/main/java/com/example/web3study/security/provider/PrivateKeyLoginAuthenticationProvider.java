@@ -1,12 +1,9 @@
 package com.example.web3study.security.provider;
 
 
-import com.example.web3study.pojo.Admin;
 import com.example.web3study.pojo.Users;
-import com.example.web3study.service.AdminService;
 import com.example.web3study.service.BlockchainUserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;

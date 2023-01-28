@@ -68,7 +68,14 @@ public class Web3Utils {
     }
 
     public static Web3Account createWallet(String SavaPath) throws CipherException, IOException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
-
+        if (SavaPath==null){
+            String absolutePath = FileUtils.getAbsolutePath();
+            File upload = new File(absolutePath,"/private/");
+            if(!upload.exists()) {
+                upload.mkdirs();
+            }
+            SavaPath = upload.getAbsolutePath();
+        }
         String password = "";
         Bip39Wallet wallet = WalletUtils.generateBip39Wallet(password, new File(SavaPath));
         //生成12个单词的助记词
@@ -80,6 +87,10 @@ public class Web3Utils {
         String publicKey = credentials.getEcKeyPair().getPublicKey().toString(16);
         String PrivateKey = credentials.getEcKeyPair().getPrivateKey().toString(16);
         return new Web3Account(address, publicKey, PrivateKey, memorizingWords);
+    }
+
+    public static Web3Account createWallet() throws CipherException, IOException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
+       return createWallet(null);
     }
 
     public static Web3TransactionError web3jErrorToPojo(String errorMessage) {

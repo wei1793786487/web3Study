@@ -2,12 +2,10 @@ package com.example.web3study.controller;
 
 import com.example.web3study.service.CheckService;
 import com.example.web3study.utils.IpUtils;
+import com.example.web3study.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 public class CheckController {
 
     @Autowired
+  private    RedisUtils redisUtils;
+    @Autowired
     private   CheckService checkService;
 
     @PostMapping("check")
@@ -27,5 +27,11 @@ public class CheckController {
         log.info("TOEKN is "+token);
         Boolean aBoolean = checkService.checkByGoogleRecaptcha(token, ip);
         return ip;
+    }
+
+    @GetMapping("tesk")
+    public String dd(){
+        redisUtils.hset("6666","11","44");
+        return "";
     }
 }

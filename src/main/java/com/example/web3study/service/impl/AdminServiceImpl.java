@@ -1,9 +1,6 @@
 package com.example.web3study.service.impl;
 
-import com.example.web3study.exception.XxException;
-import com.example.web3study.pojo.common.ReturnCode;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -13,9 +10,6 @@ import com.example.web3study.pojo.Admin;
 import com.example.web3study.service.AdminService;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Slf4j
