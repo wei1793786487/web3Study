@@ -20,5 +20,9 @@ public interface UsersMapper {
 
 	Users findOneByBuid(@Param("buid")Integer buid);
 
+    Integer countByPhone(@Param("phone")String phone);
+
+
+
 
 }
