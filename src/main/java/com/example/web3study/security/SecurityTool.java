@@ -6,6 +6,7 @@ import com.example.web3study.pojo.SystemInfo;
 import com.example.web3study.service.SystemInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,7 +17,6 @@ public class SecurityTool {
     SystemInfoService systemInfoService;
 
     public String generateJwt(jwtUser jwtUser){
-        // TODO 需要redis缓存一下 可以更快
         SystemInfo systemInfo = systemInfoService.getSystemInfo();
         System.out.println(systemInfo);
         RSA rsa = new RSA(systemInfo.getSystemPrivateKey(),systemInfo.getSystemPublicKey());

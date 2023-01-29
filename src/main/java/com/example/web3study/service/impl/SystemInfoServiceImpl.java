@@ -1,5 +1,6 @@
 package com.example.web3study.service.impl;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import com.example.web3study.mapper.SystemInfoMapper;
@@ -14,6 +15,7 @@ public class SystemInfoServiceImpl implements SystemInfoService {
 
 
     @Override
+    @Cacheable("systemInfo")
     public SystemInfo getSystemInfo() {
         return systemInfoMapper.selectByPrimaryKey(0);
     }
