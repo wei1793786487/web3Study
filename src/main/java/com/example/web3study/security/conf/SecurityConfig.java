@@ -7,6 +7,7 @@ import com.example.web3study.security.provider.PrivateKeyLoginAuthenticationProv
 import com.example.web3study.security.provider.PrivateKeyLoginFilter;
 import com.example.web3study.service.AdminService;
 import com.example.web3study.service.BlockchainUserService;
+import com.example.web3study.service.SystemInfoService;
 import com.example.web3study.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -61,6 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private PasswordEncoder passwordEncoder;
 
 
+    @Autowired
+    SystemInfoService systemInfoService;
 
 
     /**
@@ -88,12 +91,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String[] loginUlr = {"/private_key_login", "/user/login","/login"};
 
         http.cors().and().csrf().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+                .mvcMatchers(loginUlr).permitAll()
+                .mvcMatchers("/**").authenticated()
                 .and()
+                .addFilterAfter(new CustomizeJwtVerifyFilter(super.authenticationManager(),systemInfoService), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(privateKeyLoginFilter(),UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(phoneLoginFilter(),UsernamePasswordAuthenticationFilter.class)
                 .formLogin().usernameParameter("user_name").passwordParameter("pass_word")

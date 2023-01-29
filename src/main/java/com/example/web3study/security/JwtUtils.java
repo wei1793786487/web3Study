@@ -1,6 +1,8 @@
 package com.example.web3study.security;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.crypto.asymmetric.RSA;
+import com.example.web3study.pojo.SystemInfo;
 import com.google.gson.Gson;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -59,13 +61,12 @@ public class JwtUtils {
     /**
      * 获取token中的用户信息
      *
-     * @param token     用户请求中的令牌
-     * @param publicKey 公钥
-     * @return 用户信息
+     *
      */
-    public static <T> Payload<T> getInfoFromToken(String token, PublicKey publicKey, Class<T> userType) {
+    public static <T> Payload<T> getInfoFromToken(String token, SystemInfo systemInfo, Class<T> userType) {
+        RSA rsa = new RSA(systemInfo.getSystemPrivateKey(), systemInfo.getSystemPublicKey());
         Gson gson = new Gson();
-        Jws<Claims> claimsJws = parserToken(token, publicKey);
+        Jws<Claims> claimsJws = parserToken(token, rsa.getPublicKey());
         Claims body = claimsJws.getBody();
         Payload<T> claims = new Payload<>();
         claims.setId(body.getId());
@@ -77,12 +78,11 @@ public class JwtUtils {
     /**
      * 获取token中的载荷信息
      *
-     * @param token     用户请求中的令牌
-     * @param publicKey 公钥
-     * @return 用户信息
+
      */
-    public static <T> Payload<T> getInfoFromToken(String token, PublicKey publicKey) {
-        Jws<Claims> claimsJws = parserToken(token, publicKey);
+    public static <T> Payload<T> getInfoFromToken(String token, SystemInfo systemInfo) {
+        RSA rsa = new RSA(systemInfo.getSystemPrivateKey(), systemInfo.getSystemPublicKey());
+        Jws<Claims> claimsJws = parserToken(token, rsa.getPublicKey());
         Claims body = claimsJws.getBody();
         Payload<T> claims = new Payload<>();
         claims.setId(body.getId());

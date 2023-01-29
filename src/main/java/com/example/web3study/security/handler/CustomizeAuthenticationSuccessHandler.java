@@ -37,17 +37,21 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof Admin){
             Admin admin = (Admin) principal;
-            jwtUser jwtUser = new jwtUser().setName(admin.getName()).setPhone(admin.getPhone()).setUid(admin.getId()).setRole("admin");
+
+            jwtUser jwtUser = new jwtUser()
+                    .setName(admin.getName())
+                    .setPhone(admin.getPhone())
+                    .setType(0)
+                    .setUid(admin.getId()).setRole("admin");
             String jwt = securityTool.generateJwt(jwtUser);
             JsonWriteUtlis.sendJsonSuccess(response,jwt);
         }else if (authentication instanceof PhoneLoginFilterAuthenticationToken){
             PhoneLoginFilterAuthenticationToken principal1 = (PhoneLoginFilterAuthenticationToken) authentication;
-
-            writeUserToken(principal1,response);
+            writeUserToken(principal1,response,1);
         }else if (authentication instanceof PrivateKeyLoginFilterAuthenticationToken){
             PrivateKeyLoginFilterAuthenticationToken principal1 = (PrivateKeyLoginFilterAuthenticationToken) authentication;
 
-            writeUserToken(principal1,response);
+            writeUserToken(principal1,response,2);
         }
         else {
             //不会触发这个 万一有黑客触发了 骂他
@@ -55,9 +59,13 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
 
         }
     }
-    public void  writeUserToken(Authentication authentication,HttpServletResponse response) throws IOException {
+    public void  writeUserToken(Authentication authentication,HttpServletResponse response,Integer type) throws IOException {
         Users users = (Users) authentication.getDetails();
-        jwtUser jwtUser = new jwtUser().setPhone(users.getPhone()).setUid(users.getId()).setRole("user");
+        jwtUser jwtUser = new jwtUser()
+                .setPhone(users.getPhone())
+                .setUid(users.getId())
+                .setType(type)
+                .setRole("user");
         String jwt = securityTool.generateJwt(jwtUser);
         JsonWriteUtlis.sendJsonSuccess(response,jwt);
     }

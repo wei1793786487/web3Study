@@ -18,7 +18,6 @@ public class SecurityTool {
 
     public String generateJwt(jwtUser jwtUser){
         SystemInfo systemInfo = systemInfoService.getSystemInfo();
-        System.out.println(systemInfo);
         RSA rsa = new RSA(systemInfo.getSystemPrivateKey(),systemInfo.getSystemPublicKey());
         log.info(rsa.getPrivateKeyBase64());
         log.info(rsa.getPublicKeyBase64());

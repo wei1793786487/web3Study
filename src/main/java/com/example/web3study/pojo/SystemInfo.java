@@ -12,6 +12,8 @@ public class SystemInfo implements Serializable {
 
     private String systemPrivateKey;
 
+
+
     /**
      * token过期时间
      */

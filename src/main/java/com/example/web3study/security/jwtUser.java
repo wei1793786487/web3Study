@@ -13,5 +13,10 @@ public class jwtUser {
 
      private String phone;
      private String role;
+     /**
+      *      登录 类型0是账号密码登录  1是手机号登录 2是私钥登录
+      */
+     private Integer type;
 
+     private String platform;
 }
