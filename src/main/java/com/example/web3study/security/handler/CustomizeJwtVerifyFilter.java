@@ -90,34 +90,37 @@ public class CustomizeJwtVerifyFilter extends BasicAuthenticationFilter {
                 SecurityContextHolder.getContext().setAuthentication(phoneLoginFilterAuthenticationToken);
 
             }else {
-                throw new XxException(ReturnCode.TOKEN_ERROR);
+                JsonWriteUtlis.sendJson(response, ResultData.fail(ReturnCode.TOKEN_EXP));
             }
+
             //没有问题之后再放行过滤器
             chain.doFilter(request, response);
         }catch (Exception e) {
+            // tdod 去除
+            throw e;
             //如果是时间过期的异常的话
-            if (e instanceof ExpiredJwtException) {
-                Claims claims = ((ExpiredJwtException) e).getClaims();
-                throw new XxException(ReturnCode.TOKEN_EXP);
-                  //过期
-//                String userString = claims.get("user", String.class);
-//                SysUser user = JSON.parseObject(userString, SysUser.class);
-//
-//                //如果过期了 那么看看redis里面有没有缓存
-//                String refresh = redisTemplate.opsForValue().get(redisProperties.getTokenPre() + user.getId());
-//                Boolean isoverTime = TimeUtils.CalculateTime(user.getLasttime(), redisProperties.getDisparity());
-//                if (refresh != null && isoverTime) {
-//                    //如果redis里面有缓存的话并且没有超过一定时间没有登录，那么生成新的token.
-//                    String newToken = JwtUtils.generateTokenExpireInMinutes(user, jwtProperties.getPrivateKey(), jwtProperties.getExpire());
-//                    JsonResult result = ResultTool.fail(ResultCode.TOKEN_REFRESH, newToken);
-//                    JsonWriteUtlis.fail(request, response, result);
-//                } else {
-//                    JsonResult result = ResultTool.fail(ResultCode.USER_ACCOUNT_EXPIRED);
-//                    JsonWriteUtlis.fail(request, response, result);
-//                }
-            } else {
-                JsonWriteUtlis.sendJson(response, ResultData.fail(ReturnCode.TOKEN_EXP));
-            }
+//            if (e instanceof ExpiredJwtException) {
+//                Claims claims = ((ExpiredJwtException) e).getClaims();
+//                JsonWriteUtlis.sendJson(response, ResultData.fail(ReturnCode.TOKEN_EXP));
+//                  //过期
+////                String userString = claims.get("user", String.class);
+////                SysUser user = JSON.parseObject(userString, SysUser.class);
+////
+////                //如果过期了 那么看看redis里面有没有缓存
+////                String refresh = redisTemplate.opsForValue().get(redisProperties.getTokenPre() + user.getId());
+////                Boolean isoverTime = TimeUtils.CalculateTime(user.getLasttime(), redisProperties.getDisparity());
+////                if (refresh != null && isoverTime) {
+////                    //如果redis里面有缓存的话并且没有超过一定时间没有登录，那么生成新的token.
+////                    String newToken = JwtUtils.generateTokenExpireInMinutes(user, jwtProperties.getPrivateKey(), jwtProperties.getExpire());
+////                    JsonResult result = ResultTool.fail(ResultCode.TOKEN_REFRESH, newToken);
+////                    JsonWriteUtlis.fail(request, response, result);
+////                } else {
+////                    JsonResult result = ResultTool.fail(ResultCode.USER_ACCOUNT_EXPIRED);
+////                    JsonWriteUtlis.fail(request, response, result);
+////                }
+//            } else {
+//                JsonWriteUtlis.sendJson(response, ResultData.fail(ReturnCode.TOKEN_EXP));
+//            }
         }
     }
 

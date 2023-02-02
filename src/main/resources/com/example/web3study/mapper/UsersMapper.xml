@@ -23,6 +23,8 @@
     <result column="bank_owner" jdbcType="VARCHAR" property="bankOwner" />
     <result column="bank_branch" jdbcType="VARCHAR" property="bankBranch" />
     <result column="buid" jdbcType="INTEGER" property="buid" />
+    <association property="blockchainUser" javaType="com.example.web3study.pojo.BlockchainUser" column="buid" jdbcType="INTEGER" select="com.example.web3study.mapper.BlockchainUserMapper.selectByPrimaryKey"/>
+
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->

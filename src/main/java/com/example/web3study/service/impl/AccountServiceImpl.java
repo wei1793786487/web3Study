@@ -79,6 +79,7 @@ public class AccountServiceImpl implements AccountService {
         CurrencyInformation currencyInformation = redisUtils.getCurrencyInformation();
         blockchainUser.setVirtualResources(currencyInformation.getVirtualResources());
         blockchainUser.setSystemTokenAddress(currencyInformation.getAddress());
+        blockchainUser.setAddress(blockchainUser.getAddress());
         blockchainUser.setSystemTokenName(currencyInformation.getName());
         blockchainUser.setSystemTokenNumber(currencyInformation.getTotalNumber().intValue());
         blockchainUserService.insertSelective(blockchainUser);

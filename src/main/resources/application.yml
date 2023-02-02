@@ -40,7 +40,7 @@ web3j:
 #  client-address: "https://opbningxia.bsngate.com:18602/api/cbec55bcc1aa422c9cd0e99ea100290e/rpc"
 #  client-address: "http://127.0.0.1:7545"
   client-address: "http://192.168.1.250:8545"
-  system_token_address : "0x5dF0DAd32b92207317f9D010D1Ee02F1D81EedD1"
+  system_token_address : "0x1724A1D07dF5Dcc33E69fA87Eb547c305332923C"
 
 
 ipfs:

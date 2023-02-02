@@ -2,6 +2,7 @@ package com.example.web3study.conf;
 
 import com.example.web3study.pojo.common.CurrencyInformation;
 import com.example.web3study.smartContract.WWT;
+import com.example.web3study.utils.MathUtils;
 import com.example.web3study.utils.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class SystemTokenInit {
     RedisUtils redisUtils;
 
     @PostConstruct
-    public void init() throws Exception {
+    public void init()  {
         try {
             WWT wwt = WWT.load(tokenAddress,web3j, transactionManager, staticGasProvider);
             CurrencyInformation currencyInformation = new CurrencyInformation();
@@ -48,7 +49,7 @@ public class SystemTokenInit {
             BigInteger decimals = wwt.decimals().send();
             String owner = wwt.owner().send();
             BigInteger totalSupply = wwt.totalSupply().send();
-            BigInteger divide = totalSupply.divide(new BigInteger("10").pow(decimals.intValue()));
+            BigInteger divide = MathUtils.decimalsToDivideNumber(totalSupply,decimals);
             currencyInformation.setDecimals(decimals.longValue());
             currencyInformation.setName(name);
             currencyInformation.setOwner(owner);

@@ -12,6 +12,11 @@ public class BlockchainUser {
     private String privateKey;
 
     /**
+     * 钱包地址
+     */
+    private String address;
+
+    /**
      * 虚拟币 在bsn中叫能量 在以太坊叫 以太币
      */
     private String virtualResources;

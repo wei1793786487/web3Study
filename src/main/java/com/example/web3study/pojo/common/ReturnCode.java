@@ -31,9 +31,11 @@ public enum ReturnCode {
 
     RECAPTCHA_ERROR(10086, "验证码异常"),
     REGISTER_PHONE_ERROR(10087, "验证码失效,请重新发送"),
-    VERIFICATION_CODE_ERROR(10085,"验证码错误" ),
+    VERIFICATION_CODE_ERROR(10085, "验证码错误"),
     IS_REGISTER(10089, "该手机号已经注册"),
-    TOKEN_EXP(10090,"token过期,请重新登陆" );
+    TOKEN_EXP(10090, "token过期,请重新登陆"),
+    TRANSACTION_ERROR(5000, "区块链交易交易错误"),
+    TOEKN_NOT_ENOUGH(5001, "拥有的货币数量步骤"), RECEIVE_ERROR(5002,"领取错误" );
 
 
     /**

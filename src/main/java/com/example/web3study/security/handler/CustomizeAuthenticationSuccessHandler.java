@@ -34,10 +34,11 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
+        //用户登录的id存放进redis里面 以便于删除jwt用户 下面两个setdetail里面 放上id 然后这里取出
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (principal instanceof Admin){
             Admin admin = (Admin) principal;
-
             jwtUser jwtUser = new jwtUser()
                     .setName(admin.getName())
                     .setPhone(admin.getPhone())
@@ -50,14 +51,13 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
             writeUserToken(principal1,response,1);
         }else if (authentication instanceof PrivateKeyLoginFilterAuthenticationToken){
             PrivateKeyLoginFilterAuthenticationToken principal1 = (PrivateKeyLoginFilterAuthenticationToken) authentication;
-
             writeUserToken(principal1,response,2);
         }
         else {
             //不会触发这个 万一有黑客触发了 骂他
             JsonWriteUtlis.sendJsonSuccess(response,"sb");
-
         }
+
     }
     public void  writeUserToken(Authentication authentication,HttpServletResponse response,Integer type) throws IOException {
         Users users = (Users) authentication.getDetails();

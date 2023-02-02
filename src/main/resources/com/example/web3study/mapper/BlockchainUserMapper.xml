@@ -6,6 +6,7 @@
     <!--@Table blockchain_user-->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="private_key" jdbcType="VARCHAR" property="privateKey" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
     <result column="virtual_resources" jdbcType="VARCHAR" property="virtualResources" />
     <result column="system_token_name" jdbcType="VARCHAR" property="systemTokenName" />
     <result column="system_token_number" jdbcType="INTEGER" property="systemTokenNumber" />
@@ -13,7 +14,8 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, private_key, virtual_resources, system_token_name, system_token_number, system_token_address
+    id, private_key, address, virtual_resources, system_token_name, system_token_number, 
+    system_token_address
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--@mbg.generated-->
@@ -29,10 +31,12 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.web3study.pojo.BlockchainUser" useGeneratedKeys="true">
     <!--@mbg.generated-->
-    insert into blockchain_user (private_key, virtual_resources, system_token_name, 
-      system_token_number, system_token_address)
-    values (#{privateKey,jdbcType=VARCHAR}, #{virtualResources,jdbcType=VARCHAR}, #{systemTokenName,jdbcType=VARCHAR}, 
-      #{systemTokenNumber,jdbcType=INTEGER}, #{systemTokenAddress,jdbcType=VARCHAR})
+    insert into blockchain_user (private_key, address, virtual_resources, 
+      system_token_name, system_token_number, system_token_address
+      )
+    values (#{privateKey,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{virtualResources,jdbcType=VARCHAR}, 
+      #{systemTokenName,jdbcType=VARCHAR}, #{systemTokenNumber,jdbcType=INTEGER}, #{systemTokenAddress,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.web3study.pojo.BlockchainUser" useGeneratedKeys="true">
     <!--@mbg.generated-->
@@ -40,6 +44,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="privateKey != null">
         private_key,
+      </if>
+      <if test="address != null">
+        address,
       </if>
       <if test="virtualResources != null">
         virtual_resources,
@@ -57,6 +64,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="privateKey != null">
         #{privateKey,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
       </if>
       <if test="virtualResources != null">
         #{virtualResources,jdbcType=VARCHAR},
@@ -79,6 +89,9 @@
       <if test="privateKey != null">
         private_key = #{privateKey,jdbcType=VARCHAR},
       </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
       <if test="virtualResources != null">
         virtual_resources = #{virtualResources,jdbcType=VARCHAR},
       </if>
@@ -98,6 +111,7 @@
     <!--@mbg.generated-->
     update blockchain_user
     set private_key = #{privateKey,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
       virtual_resources = #{virtualResources,jdbcType=VARCHAR},
       system_token_name = #{systemTokenName,jdbcType=VARCHAR},
       system_token_number = #{systemTokenNumber,jdbcType=INTEGER},

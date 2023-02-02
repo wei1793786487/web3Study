@@ -97,4 +97,9 @@ public class Users {
      * 区块链绑定的信息
      */
     private Integer buid;
+
+
+    private BlockchainUser blockchainUser;
+
+
 }

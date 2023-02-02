@@ -7,7 +7,7 @@ import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
-public class ObjectTool {
+public class ObjectTool extends Object{
 
     public static MyPageInfo<Nft> getPageObject(List object){
         PageInfo<Nft> nftPageInfo = new PageInfo<>(object);

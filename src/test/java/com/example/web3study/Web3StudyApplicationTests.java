@@ -12,8 +12,10 @@ import com.example.web3study.pojo.common.CurrencyInformation;
 import com.example.web3study.security.JwtUtils;
 import com.example.web3study.security.jwtUser;
 import com.example.web3study.service.SystemInfoService;
+import com.example.web3study.service.impl.Nft20ServiceImpl;
 import com.example.web3study.smartContract.NFT721;
 import com.example.web3study.smartContract.WWT;
+import com.example.web3study.utils.MathUtils;
 import com.example.web3study.utils.RedisUtils;
 import io.reactivex.functions.Consumer;
 import org.junit.jupiter.api.Test;
@@ -33,6 +35,7 @@ import org.web3j.protocol.core.methods.request.EthFilter;
 import org.web3j.tx.TransactionManager;
 import org.web3j.tx.gas.StaticGasProvider;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.KeyPair;
 import java.util.concurrent.ExecutionException;
@@ -60,14 +63,25 @@ class Web3StudyApplicationTests {
     @Value("${web3j.system_token_address}")
     private String tokenAddress;
 
+    @Autowired
+    Nft20ServiceImpl nft20Service;
     @Value("${web3j.blockchain_resources_name}")
     private String resourcesName;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     private static final Logger logger = LoggerFactory.getLogger(BlockChainInfoController.class);
     @Test
     void contextLoads() throws Exception {
+//        nft20Service.setTokenFromAdminNumber(10.0);
+        nft20Service.getTokenFromAdmin("0x0F0D6d31b4F3DBAB6DF07FA5cdd8FbE395616a15");
+    }
 
+    void ss() throws Exception {
+        BigInteger adminBalance = nft20Service.getAdminBalance();
+        System.out.println(adminBalance);
+    }
+    void  loadWWT() throws Exception {
         WWT wwt = WWT.load(tokenAddress,web3j, transactionManager, staticGasProvider);
         CurrencyInformation currencyInformation = new CurrencyInformation();
         currencyInformation.setAddress(tokenAddress);
@@ -82,7 +96,6 @@ class Web3StudyApplicationTests {
         currencyInformation.setTotalNumber(totalSupply.longValue());
         System.out.println("初始化货币"+currencyInformation.toString());
     }
-
 
     void  gentalPass(){
         String lx1793786487 = passwordEncoder.encode("996123");
